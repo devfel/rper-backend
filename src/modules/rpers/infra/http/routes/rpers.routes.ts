@@ -10,15 +10,21 @@ const rpersController = new RpersController();
 //Middleware to ensure the user is logged in before listing RPERs and Creating new one.
 rpersRouter.use(ensureAuthenticated);
 
-rpersRouter.post(
-    "/",
-    celebrate({
-        [Segments.BODY]: {
-            name: Joi.string().required(),
-            coordinator_id: Joi.string().uuid().required()
-        }
-    }), rpersController.create);
+rpersRouter.post("/", celebrate({
+    [Segments.BODY]: {
+        name: Joi.string().required(),
+        coordinator_id: Joi.string().uuid().required()
+    }
+}), rpersController.create);
+
 rpersRouter.get("/", rpersController.index);
+
+rpersRouter.post('/members', celebrate({
+    [Segments.BODY]: {
+        rper_id: Joi.string().required(),
+        members_id: Joi.array().required(),
+    }
+}), rpersController.addMembers);
 
 export default rpersRouter;
 

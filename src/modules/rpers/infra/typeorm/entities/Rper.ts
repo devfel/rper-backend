@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany, JoinTable } from "typeorm";
 import User from "@modules/users/infra/typeorm/entities/User";
 
 @Entity('rpers')
@@ -15,6 +15,10 @@ class Rper {
     @ManyToOne(() => User)
     @JoinColumn({ name: 'coordinator_id' })
     coordinator: User;
+
+    @ManyToMany(() => User)
+    @JoinTable({ name: 'rper_members', joinColumns: [{ name: 'rper_id' }], inverseJoinColumns: [{ name: 'user_id' }] })
+    members: User[];
 
     @CreateDateColumn()
     created_at: Date;

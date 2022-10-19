@@ -39,7 +39,7 @@ export class CreateRperMembers1666151038310 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {
-        await queryRunner.dropTable('rper_coordinators');
+        await queryRunner.dropTable('rper_members');
     }
 
 }

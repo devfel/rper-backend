@@ -7,5 +7,5 @@ export default interface IUsersRepository {
     create(data: ICreateUserDTO): Promise<User>;
     save(user: User): Promise<User>;
     findAllUsers(): Promise<User[]>;
-
+    findByIds(ids: string[]): Promise<User[]>
 }

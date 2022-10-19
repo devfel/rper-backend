@@ -40,6 +40,10 @@ class UsersRepository implements IUsersRepository {
         return user;
     }
 
+    public async findByIds(ids: string[]): Promise<User[]> {
+        return this.ormRepository.findByIds(ids);
+    }
+
     public async create(userData: ICreateUserDTO): Promise<User> {
         const user = this.ormRepository.create(userData);
         await this.ormRepository.save(user);

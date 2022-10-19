@@ -21,12 +21,22 @@ class RpersRepository implements IRpersRepository {
     public async create({ name, coordinator_id }: ICreateRperDTO): Promise<Rper> {
         const rper = this.ormRepository.create({ name, coordinator_id });
         await this.ormRepository.save(rper);
-        return (rper);
+        return rper;
     }
 
     public async findAllRpers(): Promise<Rper[]> {
         const rpers = await this.ormRepository.find();
         return rpers;
+    }
+
+    public async findById(id: string): Promise<Rper | undefined> {
+        const rper = await this.ormRepository.findOne(id);
+        return rper;
+    }
+
+    public async update(rper: Rper): Promise<Rper> {
+        await this.ormRepository.save(rper);
+        return rper;
     }
 
 }

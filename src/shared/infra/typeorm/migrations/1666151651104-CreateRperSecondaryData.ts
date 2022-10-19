@@ -58,6 +58,8 @@ export class CreateRperSecondaryData1666151651104 implements MigrationInterface 
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {
+        await queryRunner.dropTable('rper_secondary_data');
+        await queryRunner.query('drop type rper_status');
     }
 
 }
