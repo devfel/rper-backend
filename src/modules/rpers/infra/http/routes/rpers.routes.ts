@@ -3,9 +3,12 @@ import { celebrate, Segments, Joi } from 'celebrate';
 
 import ensureAuthenticated from "@modules/users/infra/http/middlewares/ensureAuthenticated";
 import RpersController from '../controllers/RpersController';
+import { CreateRpersMembersController } from '../controllers/CreateRpersMembersController';
 
 const rpersRouter = Router();
 const rpersController = new RpersController();
+const createRpersMembersController = new CreateRpersMembersController();
+
 
 //Middleware to ensure the user is logged in before listing RPERs and Creating new one.
 rpersRouter.use(ensureAuthenticated);
@@ -24,7 +27,8 @@ rpersRouter.post('/members', celebrate({
         rper_id: Joi.string().required(),
         members_id: Joi.array().required(),
     }
-}), rpersController.addMembers);
+}), createRpersMembersController.handle);
+//}), rpersController.addMembers); //Check This Solution
 
 export default rpersRouter;
 

@@ -1,5 +1,6 @@
-import dotenv, { config } from "dotenv";
+//import dotenv, { config } from "dotenv";
 import 'reflect-metadata';
+import 'dotenv/config'
 import cors from 'cors';
 import { errors } from 'celebrate';
 
@@ -13,7 +14,7 @@ import uploadConfig from '@config/upload';
 import '@shared/infra/typeorm';
 import '@shared/container';
 
-dotenv.config();
+//dotenv.config();
 
 const app = express();
 app.use(cors());
