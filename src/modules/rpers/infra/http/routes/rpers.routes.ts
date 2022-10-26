@@ -25,10 +25,9 @@ rpersRouter.get("/", rpersController.index);
 rpersRouter.post('/members', celebrate({
     [Segments.BODY]: {
         rper_id: Joi.string().required(),
-        members_id: Joi.array().required(),
+        users_id: Joi.array().required(),
     }
 }), createRpersMembersController.handle);
-//}), rpersController.addMembers); //Check This Solution
 
 export default rpersRouter;
 
