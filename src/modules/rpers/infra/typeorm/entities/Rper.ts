@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany, JoinTable } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany, JoinTable, OneToOne } from "typeorm";
 import User from "@modules/users/infra/typeorm/entities/User";
+import { RperSecondaryData } from './RperSecondaryData';
 
 @Entity('rpers')
 class Rper {
@@ -19,6 +20,10 @@ class Rper {
     @ManyToMany(() => User)
     @JoinTable({ name: 'rper_members', joinColumns: [{ name: 'rper_id' }], inverseJoinColumns: [{ name: 'user_id' }] })
     members: User[];
+
+    @OneToOne(() => RperSecondaryData, secondaryData => secondaryData.rper)
+    @JoinColumn({ name: 'rper_id' })
+    secondaryData: RperSecondaryData;
 
     @CreateDateColumn()
     created_at: Date;

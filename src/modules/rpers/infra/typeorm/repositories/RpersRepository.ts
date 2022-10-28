@@ -29,7 +29,7 @@ class RpersRepository implements IRpersRepository {
         return rpers;
     }
 
-    public async findById(id: string): Promise<Rper | undefined> {
+    public async findById(id: string): Promise<Rper> {
         const rper = await this.ormRepository.findOne(id);
         return rper;
     }
