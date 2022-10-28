@@ -42,7 +42,8 @@ class UsersRepository implements IUsersRepository {
                 email: el.email,
                 updated_at: el.updated_at,
                 user_id: el.user_id,
-                password: el.password
+                password: el.password,
+                avatar_url: el.getAvatarUrl()
             });
 
             delete userNoPassword.password;
