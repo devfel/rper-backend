@@ -20,28 +20,15 @@ export async function ensureRperMember(
         throw new AppError('RPER not found', 404);
     }
 
-    console.log("--- COORDINATOR ---");
-    console.log(rper.coordinator_id !== user_id);
-    console.log("RPER Coordinator ID: " + rper.coordinator_id);
-    console.log("User ID: " + user_id);
+    // if the coordinator ID is different of the user logged in
+    const notCoordinator = rper.coordinator_id !== user_id;
 
+    // Negate if find the user logged in ID in the members list
+    const notMember = !rper.members?.find(rper => rper.user_id === user_id);
 
-    console.log("--- MEMBERS ---");
-    console.log(!!rper.members?.find(rper => rper.user_id === user_id))
-    console.log("RPER ID: " + rper.rper_id)
-    console.log("RPER Members:" + rper.members);
-    rper.members?.find(rper => {
-        console.log("RPER User_ID: " + rper.user_id);
-        console.log("User ID: " + user_id);
-        return rper.user_id === user_id;
-    })
-
-
-    // both bellow has to be true to throw the error. //Meaning the user logged in is neither a coordinator nor a member. 
-    if (
-        rper.coordinator_id !== user_id &&                      // if the coordinator ID is different of the user logged in
-        !rper.members?.find(rper => rper.user_id === user_id)   // Negate if find the user logged in ID in the members list
-    ) {
+    // both bellow has to be true to throw the error. 
+    //that is, the user logged in is neither a coordinator nor a member. 
+    if (notCoordinator && notMember) {
         throw new AppError('User does not have permission. User is not a Member nor the Coordinator of this RPER.', 403);
     }
 

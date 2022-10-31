@@ -17,7 +17,7 @@ class Rper {
     @JoinColumn({ name: 'coordinator_id' })
     coordinator: User;
 
-    @ManyToMany(() => User)
+    @ManyToMany(() => User, { eager: true })
     @JoinTable({ name: 'rper_members', joinColumns: [{ name: 'rper_id' }], inverseJoinColumns: [{ name: 'user_id' }] })
     members: User[];
 
