@@ -28,6 +28,15 @@ const upload = multer(uploadConfig);
 
 // });
 
+/** 
+ * @swagger
+ * /users:
+ *  post:
+ *      description: Create new User
+ *      responses:
+ *      '200':
+ *          description: User created successfully
+*/
 usersRouter.post("/", celebrate(
     {
         [Segments.BODY]: {
@@ -37,8 +46,27 @@ usersRouter.post("/", celebrate(
         }
     }),
     usersController.create);
+
+/** 
+ * @swagger
+ * /users:
+ *  get:
+ *      description: List all users
+ *      responses:
+ *      '200':
+ *          description: List of all users in the application
+*/
 usersRouter.get("/", ensureAuthenticated, usersController.index);
 
+/** 
+ * @swagger
+ * /users:
+ *  patch:
+ *      description: Update User Avatar Picture
+ *      responses:
+ *      '200':
+ *          description: Avatar picture updated successfully
+*/
 usersRouter.patch('/avatar', ensureAuthenticated, upload.single('avatar'), userAvatarController.update);
 
 export default usersRouter;
