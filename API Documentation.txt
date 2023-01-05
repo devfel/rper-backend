@@ -1,0 +1,289 @@
+title: "RPER API Documentation",
+description: "Rapid Participatory Emancipatory Research (RPER) consist of intervention techniques that allow qualitative and quantitative information to be obtained from a collectivity in a short period. This information is then used to identify problems, their causes, and possible solutions, with the goal of promoting social change and development. The method was specifically designed to intervene, in a planned way, in the complex reality of social groups such as rural land reform settlements, associations, cooperatives, among others.",
+contact: {
+	name: "- Luiz Flavio Felizardo",
+    email: "devfelizardo@gmail.com"
+}
+servers: ["http://localhost:3333"]
+
+===== Users =====
+--- Create ---
+type: Post
+link: {{ _.base_url }}/users
+JSON Body: 
+{
+	"name": "Feliz test333",
+	"email": "feltest3332@gmail.com",
+	"password": "pass5"
+}
+
+Response: 200 Ok. 
+{
+	"name": "Feliz test333",
+	"email": "feltest3332@gmail.com",
+	"user_id": "c08d3e94-caae-45ce-a9b3-6dd7c8f62da2",
+	"created_at": "2022-10-20T09:48:13.024Z",
+	"updated_at": "2022-10-20T09:48:13.024Z"
+}
+
+--- List All ---
+type: Get
+link: {{ _.base_url }}/users
+JSON Body: None
+Token: Bearer Token (Authentication Required)
+
+Response: 200 Ok. 
+[
+	{
+		"name": "Feliz BR",
+		"avatar": null,
+		"created_at": "2022-06-16T20:05:00.902Z",
+		"email": "fel@gmail.com",
+		"updated_at": "2022-06-16T20:05:00.902Z",
+		"user_id": "e4746f63-473e-4370-9735-c1b6750b75b1",
+		"avatar_url": null
+	},
+	{
+		"name": "ken BR",
+		"avatar": "5d2c520cee146db2a165-googlelogo.png",
+		"created_at": "2022-06-08T06:52:26.383Z",
+		"email": "ken@gmail.com",
+		"updated_at": "2022-06-17T05:49:31.390Z",
+		"user_id": "2c61d463-8149-4aac-ae1f-61118c0aeb1a",
+		"avatar_url": "http://localhost:3333/files/5d2c520cee146db2a165-googlelogo.png"
+	},
+]
+
+--- Show Profile ---
+type: Get
+link: {{ _.base_url }}/profile
+JSON Body: None
+Token: Bearer Token (Authentication Required)
+
+Response: 200 Ok. (Show Profile of User Logged In)
+{
+	"user_id": "c08d3e94-caae-45ce-a9b3-6dd7c8f62da2",
+	"name": "Feliz test333",
+	"email": "feltest3332@gmail.com",
+	"avatar": "e90dc40c77cfc39f07d5-googlelogo.png",
+	"created_at": "2022-10-20T09:48:13.024Z",
+	"updated_at": "2022-10-23T21:17:26.018Z",
+	"avatar_url": "http://localhost:3333/files/e90dc40c77cfc39f07d5-googlelogo.png"
+}
+
+--- Update Profile ---
+type: Put
+link: {{ _.base_url }}/profile
+JSON Body: 
+{
+	"name": "Ciclano2",
+	"email": "feltest222@gmail.com",
+	"old_password": "1234567",
+	"password": "123456",
+	"password_confirmation": "123456"
+
+}
+Token: Bearer Token (Authentication Required)
+
+Response: 200 Ok. (Update Profile of User Logged In)
+{
+	"user_id": "ed7bcf0f-e5a3-42ea-a67d-11f7bbcf13e5",
+	"name": "Ciclano2",
+	"email": "feltest222@gmail.com",
+	"avatar": null,
+	"created_at": "2022-08-18T04:36:05.078Z",
+	"updated_at": "2022-09-21T21:57:51.149Z"
+}
+
+--- Patch Avatar ---
+type: Patch
+link: {{ _.base_url }}/users/avatar
+Body: Multipart: 
+avatar Image.jpg
+
+Token: Bearer Token (Authentication Required)
+
+Response: 200 Ok. (Change Avatar Picture of User Logged In)
+{
+	"user": {
+		"user_id": "c08d3e94-caae-45ce-a9b3-6dd7c8f62da2",
+		"name": "Feliz test333",
+		"email": "feltest3332@gmail.com",
+		"avatar": "e90dc40c77cfc39f07d5-googlelogo.png",
+		"created_at": "2022-10-20T09:48:13.024Z",
+		"updated_at": "2022-10-23T21:17:26.018Z"
+	}
+}
+
+--- Forgot Password ---
+type: Post
+link: {{ _.base_url }}/password/forgot
+JSON Body:
+{
+	"email": "feltest2@gmail.com"
+}
+
+Response: 204 No Content. (Send Email to user with token to reset password)
+
+--- Reset Password ---
+type: Post
+link: {{ _.base_url }}/password/reset
+JSON Body:
+{
+	"token": "27530a99-cbc9-4665-a9bf-1f6931fb0906",
+	"password": "senha2",
+	"password_confirmation": "senha2"
+}
+
+Response: 200 Ok. (Password Reset Successfully)
+
+
+
+===== Sessions =====
+--- Create Session ---
+type: Post
+link: {{ _.base_url }}/sessions
+JSON Body:
+{
+	"email": "feltest3332@gmail.com",
+	"password": "senha1"
+}
+
+Response: 200 Ok. (User Logged In)
+{
+	"user": {
+		"user_id": "c08d3e94-caae-45ce-a9b3-6dd7c8f62da2",
+		"name": "Feliz test333",
+		"email": "feltest3332@gmail.com",
+		"avatar": "e90dc40c77cfc39f07d5-googlelogo.png",
+		"created_at": "2022-10-20T09:48:13.024Z",
+		"updated_at": "2022-10-23T21:17:26.018Z",
+		"avatar_url": "http://localhost:3333/files/e90dc40c77cfc39f07d5-googlelogo.png"
+	},
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzI4NTM0NTQsImV4cCI6MTY3MjkzOTg1NCwic3ViIjoiYzA4ZDNlOTQtY2FhZS00NWNlLWE5YjMtNmRkN2M4ZjYyZGEyIn0.3Jz_nFsfUwZagLVfynGP6sHyE843vqVZyAm8PYi-CWE"
+}
+
+
+===== RPER =====
+--- Update Secondary Data ---
+type: Put
+link: {{ _.base_url }}/rpers/e3bc335a-8b46-4fa2-ab7e-1a6eb4ffd391/secondary-data
+Token: Bearer Token (Authentication Required)
+JSON Body:
+{
+	"content": "Posted by Coordinator feltest332, Posted by Member 1, Poster By member ppp@gmail, posted by member 2 bbb@gmail, posted by coordinator feltest3332@gmail",
+	"status": "in_progress"
+}
+
+Response: 204 No Content. (content of the page updated).
+
+--- Add Member ---
+type: Post
+link: {{ _.base_url }}/rpers/members
+Token: Bearer Token (Authentication Required)
+Availabe only to RPER Coordinator
+JSON Body:
+{
+	"rper_id": "e3bc335a-8b46-4fa2-ab7e-1a6eb4ffd391",
+	"users_ids": ["dde47215-6131-43aa-b7af-23c5738b9d0b", "44e7b07d-79b6-44fc-96fb-2d95de70cb98"]
+}
+
+Response: 204 No Content. (Users Added to RPER).
+
+--- Create ---
+type: Post
+link: {{ _.base_url }}/rpers
+Token: Bearer Token (Authentication Required)
+JSON Body:
+{
+	"name": "RPER Testing 102",
+	"coordinator_id": "c08d3e94-caae-45ce-a9b3-6dd7c8f62da2"
+}
+
+Response: 200 ok. (RPER created).
+{
+	"name": "RPER Testing 102",
+	"coordinator_id": "c08d3e94-caae-45ce-a9b3-6dd7c8f62da2",
+	"rper_id": "ef57cfe3-f407-4e72-bfb7-343ab324f733",
+	"created_at": "2022-11-01T08:06:38.310Z",
+	"updated_at": "2022-11-01T08:06:38.332Z",
+	"secondaryData": {
+		"rper_id": "f7191ebe-2a9e-470b-bfcd-8cf5e952e321",
+		"content": "",
+		"status": "unstarted",
+		"id": "ef57cfe3-f407-4e72-bfb7-343ab324f733",
+		"created_at": "2022-11-01T08:06:38.320Z",
+		"updated_at": "2022-11-01T08:06:38.320Z"
+	}
+}
+
+--- List All ---
+type: Get
+link: {{ _.base_url }}/rpers
+Token: Bearer Token (Authentication Required)
+
+Response: 200 ok. (RPER created).
+[
+	{
+		"rper_id": "887940c3-efa2-433e-bf86-e97d22990629",
+		"name": "RPER Testing 12",
+		"coordinator_id": "c08d3e94-caae-45ce-a9b3-6dd7c8f62da2",
+		"created_at": "2022-10-26T21:04:00.233Z",
+		"updated_at": "2022-10-26T21:04:00.233Z",
+		"members": [
+			{
+				"user_id": "dde47215-6131-43aa-b7af-23c5738b9d0b",
+				"name": "Feliz PPP",
+				"email": "ppp@gmail.com",
+				"password": "$2a$08$M/rci8Lkge4I48fvVPClzOmcDFpZ.f1353rV8XVpRWt.hMFKnt1DO",
+				"avatar": "7874153c9c4dcd5a3bbd-googlelogo.png",
+				"created_at": "2022-06-22T21:44:11.701Z",
+				"updated_at": "2022-06-22T21:46:18.643Z"
+			},
+			{
+				"user_id": "44e7b07d-79b6-44fc-96fb-2d95de70cb98",
+				"name": "Feliz BBB",
+				"email": "bbb@gmail.com",
+				"password": "$2a$08$bSbIPswefYOmgKpDtZfAdeN3GjErUr3081zfo8hhazu6n49yd6WXy",
+				"avatar": "3b0cc5eea7b637f506b6-googlelogo.png",
+				"created_at": "2022-06-23T19:28:35.263Z",
+				"updated_at": "2022-06-23T19:29:53.524Z"
+			}
+		]
+	},
+	{
+		"rper_id": "e3bc335a-8b46-4fa2-ab7e-1a6eb4ffd391",
+		"name": "RPER Testing 99",
+		"coordinator_id": "c08d3e94-caae-45ce-a9b3-6dd7c8f62da2",
+		"created_at": "2022-10-28T11:46:01.472Z",
+		"updated_at": "2022-10-28T11:46:01.517Z",
+		"members": [
+			{
+				"user_id": "dde47215-6131-43aa-b7af-23c5738b9d0b",
+				"name": "Feliz PPP",
+				"email": "ppp@gmail.com",
+				"password": "$2a$08$M/rci8Lkge4I48fvVPClzOmcDFpZ.f1353rV8XVpRWt.hMFKnt1DO",
+				"avatar": "7874153c9c4dcd5a3bbd-googlelogo.png",
+				"created_at": "2022-06-22T21:44:11.701Z",
+				"updated_at": "2022-06-22T21:46:18.643Z"
+			},
+			{
+				"user_id": "44e7b07d-79b6-44fc-96fb-2d95de70cb98",
+				"name": "Feliz BBB",
+				"email": "bbb@gmail.com",
+				"password": "$2a$08$bSbIPswefYOmgKpDtZfAdeN3GjErUr3081zfo8hhazu6n49yd6WXy",
+				"avatar": "3b0cc5eea7b637f506b6-googlelogo.png",
+				"created_at": "2022-06-23T19:28:35.263Z",
+				"updated_at": "2022-06-23T19:29:53.524Z"
+			}
+		]
+	},
+	{
+		"rper_id": "c6a697b4-dc56-4ff4-93eb-30ebcf86aed7",
+		"name": "RPER Testing 100",
+		"coordinator_id": "c08d3e94-caae-45ce-a9b3-6dd7c8f62da2",
+		"created_at": "2022-11-01T05:21:54.615Z",
+		"updated_at": "2022-11-01T05:21:54.703Z",
+		"members": []
+	},
+]
