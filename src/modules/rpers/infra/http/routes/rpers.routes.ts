@@ -35,7 +35,6 @@ rpersRouter.post('/members', celebrate({
 rpersRouter.put('/:rper_id/secondary-data', celebrate({
     [Segments.BODY]: {
         content: Joi.string().required(),
-        status: Joi.string().required(),
     },
     [Segments.PARAMS]: {
         rper_id: Joi.string().uuid().required(),
