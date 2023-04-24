@@ -1,0 +1,14 @@
+services:
+  database:
+    image: postgres
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: rper_database
+    volumes:
+      - pgdata:/var/lib/postgres/data
+    ports:
+      - 5432:5432
+
+volumes:
+  pgdata:
