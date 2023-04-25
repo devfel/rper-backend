@@ -1,48 +1,71 @@
 import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
-import ensureAuthenticated from "@modules/users/infra/http/middlewares/ensureAuthenticated";
+import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import RpersController from '../controllers/RpersController';
 import { CreateRpersMembersController } from '../controllers/CreateRpersMembersController';
 import { UpdateRperController } from '../controllers/UpdateRperController';
 import { ensureRperMember } from '../middlewares/ensureRperMember';
+import { GetRperByIdController } from '../controllers/GetRperByIdController';
 
 const rpersRouter = Router();
 const rpersController = new RpersController();
 const createRpersMembersController = new CreateRpersMembersController();
 const updateRperController = new UpdateRperController();
-
+const getRperByIdController = new GetRperByIdController();
 
 //Middleware to ensure the user is logged in before listing RPERs and Creating new one.
 rpersRouter.use(ensureAuthenticated);
 
-rpersRouter.post("/", celebrate({
+rpersRouter.post(
+  '/',
+  celebrate({
     [Segments.BODY]: {
-        name: Joi.string().required(),
-        coordinator_id: Joi.string().uuid().required()
-    }
-}), rpersController.create);
+      name: Joi.string().required(),
+      coordinator_id: Joi.string().uuid().required(),
+    },
+  }),
+  rpersController.create,
+);
 
-rpersRouter.get("/", rpersController.index);
+rpersRouter.get('/', rpersController.index);
 
-rpersRouter.post('/members', celebrate({
+rpersRouter.get(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().required(),
+    },
+  }),
+  getRperByIdController.handle,
+);
+
+rpersRouter.post(
+  '/members',
+  celebrate({
     [Segments.BODY]: {
-        rper_id: Joi.string().required(),
-        users_ids: Joi.array().required(),
-    }
-}), createRpersMembersController.handle);
+      rper_id: Joi.string().required(),
+      users_ids: Joi.array().required(),
+    },
+  }),
+  createRpersMembersController.handle,
+);
 
-rpersRouter.put('/:rper_id/secondary-data', celebrate({
+rpersRouter.put(
+  '/:rper_id/secondary-data',
+  celebrate({
     [Segments.BODY]: {
-        content: Joi.string().required(),
+      content: Joi.string().required(),
     },
     [Segments.PARAMS]: {
-        rper_id: Joi.string().uuid().required(),
+      rper_id: Joi.string().uuid().required(),
     },
-}), ensureRperMember, updateRperController.handle);
+  }),
+  ensureRperMember,
+  updateRperController.handle,
+);
 
 export default rpersRouter;
-
 
 //ROUTE TO GET ALL THE RPERs.
 //Route should only receive a request, call another file, return a response.
