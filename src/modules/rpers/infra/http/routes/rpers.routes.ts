@@ -7,12 +7,14 @@ import { CreateRpersMembersController } from '../controllers/CreateRpersMembersC
 import { UpdateRperController } from '../controllers/UpdateRperController';
 import { ensureRperMember } from '../middlewares/ensureRperMember';
 import { GetRperByIdController } from '../controllers/GetRperByIdController';
+import { RemoveRperMemberController } from '../controllers/RemoveRperMemberController';
 
 const rpersRouter = Router();
 const rpersController = new RpersController();
 const createRpersMembersController = new CreateRpersMembersController();
 const updateRperController = new UpdateRperController();
 const getRperByIdController = new GetRperByIdController();
+const removeRperMemberController = new RemoveRperMemberController();
 
 //Middleware to ensure the user is logged in before listing RPERs and Creating new one.
 rpersRouter.use(ensureAuthenticated);
@@ -63,6 +65,18 @@ rpersRouter.put(
   }),
   ensureRperMember,
   updateRperController.handle,
+);
+
+rpersRouter.patch(
+  '/:rper_id/members/:user_id',
+  celebrate({
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+      user_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  removeRperMemberController.handle,
 );
 
 export default rpersRouter;
