@@ -5,18 +5,16 @@ import { IRpersSecondaryDataRepository } from '../repositories/IRpersSecondaryDa
 
 @injectable()
 export class UpdateRperSecondaryDataService {
-    constructor(
-        @inject('RpersSecondaryDataRepository')
-        private rpersSecondaryDataRepository: IRpersSecondaryDataRepository,
-    ) { }
+  constructor(
+    @inject('RpersSecondaryDataRepository')
+    private rpersSecondaryDataRepository: IRpersSecondaryDataRepository,
+  ) {}
 
-    async execute(data: IUpdateRperSecondaryDataDTO): Promise<void> {
-        const rper = await this.rpersSecondaryDataRepository.findByRperId(
-            data.rper_id,
-        );
+  async execute(data: IUpdateRperSecondaryDataDTO): Promise<void> {
+    const rper = await this.rpersSecondaryDataRepository.findByRperId(data.rper_id);
 
-        Object.assign(rper, data);
+    Object.assign(rper, data);
 
-        await this.rpersSecondaryDataRepository.update(rper);
-    }
+    await this.rpersSecondaryDataRepository.update(rper);
+  }
 }

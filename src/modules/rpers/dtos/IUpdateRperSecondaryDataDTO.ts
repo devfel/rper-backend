@@ -1,5 +1,5 @@
 export interface IUpdateRperSecondaryDataDTO {
-    rper_id: string;
-    content: string;
-    status: string;
+  rper_id: string;
+  content?: string;
+  editable?: boolean;
 }
