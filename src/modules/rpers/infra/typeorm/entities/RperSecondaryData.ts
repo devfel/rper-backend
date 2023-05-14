@@ -1,34 +1,37 @@
 import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    OneToOne,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 import Rper from './Rper';
 
 @Entity('rper_secondary_data')
 export class RperSecondaryData {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column({ type: 'uuid' })
-    rper_id: string;
+  @Column({ type: 'uuid' })
+  rper_id: string;
 
-    @Column()
-    content: string;
+  @Column()
+  content: string;
 
-    @Column()
-    status: string;
+  @Column()
+  editable: boolean;
 
-    @CreateDateColumn()
-    created_at: Date;
+  @Column()
+  status: string;
 
-    @UpdateDateColumn()
-    updated_at: Date;
+  @CreateDateColumn()
+  created_at: Date;
 
-    @OneToOne(() => Rper, rper => rper.secondaryData)
-    rper: Rper;
+  @UpdateDateColumn()
+  updated_at: Date;
+
+  @OneToOne(() => Rper, rper => rper.secondaryData)
+  rper: Rper;
 }

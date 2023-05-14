@@ -4,7 +4,7 @@ import { celebrate, Segments, Joi } from 'celebrate';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import RpersController from '../controllers/RpersController';
 import { CreateRpersMembersController } from '../controllers/CreateRpersMembersController';
-import { UpdateRperController } from '../controllers/UpdateRperController';
+import { UpdateRperSecondaryController } from '../controllers/UpdateRperSecondaryController';
 import { ensureRperMember } from '../middlewares/ensureRperMember';
 import { GetRperByIdController } from '../controllers/GetRperByIdController';
 import { RemoveRperMemberController } from '../controllers/RemoveRperMemberController';
@@ -12,7 +12,7 @@ import { RemoveRperMemberController } from '../controllers/RemoveRperMemberContr
 const rpersRouter = Router();
 const rpersController = new RpersController();
 const createRpersMembersController = new CreateRpersMembersController();
-const updateRperController = new UpdateRperController();
+const updateRperController = new UpdateRperSecondaryController();
 const getRperByIdController = new GetRperByIdController();
 const removeRperMemberController = new RemoveRperMemberController();
 
@@ -57,7 +57,8 @@ rpersRouter.put(
   '/:rper_id/secondary-data',
   celebrate({
     [Segments.BODY]: {
-      content: Joi.string().required(),
+      content: Joi.string(),
+      editable: Joi.boolean(),
     },
     [Segments.PARAMS]: {
       rper_id: Joi.string().uuid().required(),

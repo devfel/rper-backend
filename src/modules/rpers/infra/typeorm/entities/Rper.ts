@@ -24,7 +24,7 @@ class Rper {
   @Column()
   coordinator_id: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'coordinator_id' })
   coordinator: User;
 
