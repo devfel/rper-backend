@@ -14,8 +14,17 @@ import UserTokensRepository from '@modules/users/infra/typeorm/repositories/User
 
 import { IRpersSecondaryDataRepository } from '@modules/rpers/repositories/IRpersSecondaryDataRepository';
 import { RpersSecondaryDataRepository } from '@modules/rpers/infra/typeorm/repositories/RpersSecondaryDataRepository';
+import { IRperEditResourceRepository } from '@modules/rpers/repositories/IRperEditResourceRepository';
+import { RperEditResourceRepository } from '@modules/rpers/infra/typeorm/repositories/RperEditResourceRepository';
 
-container.registerSingleton<IRpersRepository>('RpersRepository', RpersRepository,);
-container.registerSingleton<IUsersRepository>('UsersRepository', UsersRepository,);
-container.registerSingleton<IUserTokensRepository>('UserTokensRepository', UserTokensRepository,);
-container.registerSingleton<IRpersSecondaryDataRepository>('RpersSecondaryDataRepository', RpersSecondaryDataRepository,);
+container.registerSingleton<IRpersRepository>('RpersRepository', RpersRepository);
+container.registerSingleton<IUsersRepository>('UsersRepository', UsersRepository);
+container.registerSingleton<IUserTokensRepository>('UserTokensRepository', UserTokensRepository);
+container.registerSingleton<IRpersSecondaryDataRepository>(
+  'RpersSecondaryDataRepository',
+  RpersSecondaryDataRepository,
+);
+container.registerSingleton<IRperEditResourceRepository>(
+  'RperEditResourceRepository',
+  RperEditResourceRepository,
+);

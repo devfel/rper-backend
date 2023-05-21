@@ -21,9 +21,6 @@ export class RperSecondaryData {
   content: string;
 
   @Column()
-  editable: boolean;
-
-  @Column()
   status: string;
 
   @CreateDateColumn()

@@ -8,6 +8,9 @@ import { UpdateRperSecondaryController } from '../controllers/UpdateRperSecondar
 import { ensureRperMember } from '../middlewares/ensureRperMember';
 import { GetRperByIdController } from '../controllers/GetRperByIdController';
 import { RemoveRperMemberController } from '../controllers/RemoveRperMemberController';
+import { CreateRperEditResourceController } from '../controllers/CreateRperEditResourceController';
+import { FindRperEditResourceController } from '../controllers/FindRperEditResourceController';
+import { DeleteRperEditResourceController } from '../controllers/DeleteRperEditResourceController';
 
 const rpersRouter = Router();
 const rpersController = new RpersController();
@@ -15,6 +18,9 @@ const createRpersMembersController = new CreateRpersMembersController();
 const updateRperController = new UpdateRperSecondaryController();
 const getRperByIdController = new GetRperByIdController();
 const removeRperMemberController = new RemoveRperMemberController();
+const createRperEditResourceController = new CreateRperEditResourceController();
+const findRperEditResourceController = new FindRperEditResourceController();
+const deleteRperEditResourceController = new DeleteRperEditResourceController();
 
 //Middleware to ensure the user is logged in before listing RPERs and Creating new one.
 rpersRouter.use(ensureAuthenticated);
@@ -80,30 +86,40 @@ rpersRouter.patch(
   removeRperMemberController.handle,
 );
 
+// Editing rpers resources
+rpersRouter.post(
+  '/resources',
+  celebrate({
+    [Segments.BODY]: {
+      rper_id: Joi.string().uuid().required(),
+      user_id: Joi.string().uuid().required(),
+      resource: Joi.string().required(),
+    },
+  }),
+  createRperEditResourceController.handle,
+);
+
+rpersRouter.get(
+  '/resources/:rper_id/:resource',
+  celebrate({
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+      resource: Joi.string().required(),
+    },
+  }),
+  findRperEditResourceController.handle,
+);
+
+rpersRouter.delete(
+  '/resources/:rper_id/:user_id/:resource',
+  celebrate({
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+      user_id: Joi.string().uuid().required(),
+      resource: Joi.string().required(),
+    },
+  }),
+  deleteRperEditResourceController.handle,
+);
+
 export default rpersRouter;
-
-//ROUTE TO GET ALL THE RPERs.
-//Route should only receive a request, call another file, return a response.
-// rpersRouter.get("/", async (request, response) => {
-//     //User ID is availabe in all routes that use ensureAuthenticated:
-//     //console.log(request.user);
-
-//     const rpers = await rpersRepository.find();
-//     return response.json(rpers);
-// });
-
-// rpersRouter.get("/", async (request, response) => {
-//     const rpersRepository = new RpersRepository();
-
-//     const rperList = new CreateRperService(rpersRepository);
-//     const rpers = await rperList.findRperByName();
-
-//     return response.json(rperList);
-
-//     //     //User ID is availabe in all routes that use ensureAuthenticated:
-//     //     //console.log(request.user);
-
-//     //     const rpers = await rpersRepository.find();
-//     //     return response.json(rpers);
-//     // });
-// });
