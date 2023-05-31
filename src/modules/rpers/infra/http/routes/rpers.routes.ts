@@ -11,6 +11,9 @@ import { RemoveRperMemberController } from '../controllers/RemoveRperMemberContr
 import { CreateRperEditResourceController } from '../controllers/CreateRperEditResourceController';
 import { FindRperEditResourceController } from '../controllers/FindRperEditResourceController';
 import { DeleteRperEditResourceController } from '../controllers/DeleteRperEditResourceController';
+import uploadConfig from '@config/upload';
+import multer from 'multer';
+import { UploadImageController } from '../controllers/UploadImageController';
 
 const rpersRouter = Router();
 const rpersController = new RpersController();
@@ -21,6 +24,9 @@ const removeRperMemberController = new RemoveRperMemberController();
 const createRperEditResourceController = new CreateRperEditResourceController();
 const findRperEditResourceController = new FindRperEditResourceController();
 const deleteRperEditResourceController = new DeleteRperEditResourceController();
+const uploadImageController = new UploadImageController();
+
+const upload = multer(uploadConfig);
 
 //Middleware to ensure the user is logged in before listing RPERs and Creating new one.
 rpersRouter.use(ensureAuthenticated);
@@ -121,5 +127,7 @@ rpersRouter.delete(
   }),
   deleteRperEditResourceController.handle,
 );
+
+rpersRouter.post('/images', upload.single('image'), uploadImageController.handle)
 
 export default rpersRouter;
