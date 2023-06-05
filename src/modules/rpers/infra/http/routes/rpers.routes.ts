@@ -14,6 +14,8 @@ import { DeleteRperEditResourceController } from '../controllers/DeleteRperEditR
 import uploadConfig from '@config/upload';
 import multer from 'multer';
 import { UploadImageController } from '../controllers/UploadImageController';
+import { GetRperSectionStatusController } from '../controllers/GetRperSectionStatusController';
+import { UpdateRperSectionStatusController } from '../controllers/UpdateRperSectionStatusController';
 
 const rpersRouter = Router();
 const rpersController = new RpersController();
@@ -25,6 +27,8 @@ const createRperEditResourceController = new CreateRperEditResourceController();
 const findRperEditResourceController = new FindRperEditResourceController();
 const deleteRperEditResourceController = new DeleteRperEditResourceController();
 const uploadImageController = new UploadImageController();
+const getRperSectionStatusController = new GetRperSectionStatusController();
+const updateRperSectionStatusController = new UpdateRperSectionStatusController();
 
 const upload = multer(uploadConfig);
 
@@ -128,6 +132,31 @@ rpersRouter.delete(
   deleteRperEditResourceController.handle,
 );
 
-rpersRouter.post('/images', upload.single('image'), uploadImageController.handle)
+rpersRouter.post('/images', upload.single('image'), uploadImageController.handle);
+
+rpersRouter.get(
+  '/:rper_id/:section/status',
+  celebrate({
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+      section: Joi.string().required(),
+    },
+  }),
+  getRperSectionStatusController.handle,
+);
+
+rpersRouter.patch(
+  '/:rper_id/:section/status',
+  celebrate({
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+      section: Joi.string().required(),
+    },
+    [Segments.BODY]: {
+      new_status: Joi.string().required(),
+    },
+  }),
+  updateRperSectionStatusController.handle,
+);
 
 export default rpersRouter;
