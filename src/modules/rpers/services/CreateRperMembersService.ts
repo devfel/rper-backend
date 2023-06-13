@@ -30,6 +30,7 @@ export class CreateRperMembersService {
         }
 
         rper.members = users;
+        rper.updated_at = new Date();
 
         await this.rpersRepository.update(rper);
     }
