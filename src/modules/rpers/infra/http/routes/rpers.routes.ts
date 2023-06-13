@@ -16,6 +16,7 @@ import multer from 'multer';
 import { UploadImageController } from '../controllers/UploadImageController';
 import { GetRperSectionStatusController } from '../controllers/GetRperSectionStatusController';
 import { UpdateRperSectionStatusController } from '../controllers/UpdateRperSectionStatusController';
+import { CreateRperBackgroundController } from '../controllers/CreateRperBackgroundController';
 
 const rpersRouter = Router();
 const rpersController = new RpersController();
@@ -29,6 +30,7 @@ const deleteRperEditResourceController = new DeleteRperEditResourceController();
 const uploadImageController = new UploadImageController();
 const getRperSectionStatusController = new GetRperSectionStatusController();
 const updateRperSectionStatusController = new UpdateRperSectionStatusController();
+const createRperBackgroundController = new CreateRperBackgroundController();
 
 const upload = multer(uploadConfig);
 
@@ -157,6 +159,12 @@ rpersRouter.patch(
     },
   }),
   updateRperSectionStatusController.handle,
+);
+
+rpersRouter.patch(
+  '/:rper_id/background',
+  upload.single('background'),
+  createRperBackgroundController.handle,
 );
 
 export default rpersRouter;

@@ -12,6 +12,7 @@ import {
 } from 'typeorm';
 import User from '@modules/users/infra/typeorm/entities/User';
 import { RperSecondaryData } from './RperSecondaryData';
+import { Expose } from 'class-transformer';
 
 @Entity('rpers')
 class Rper {
@@ -23,6 +24,9 @@ class Rper {
 
   @Column()
   coordinator_id: string;
+
+  @Column()
+  background: string;
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'coordinator_id' })
@@ -45,6 +49,11 @@ class Rper {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Expose({ name: 'background_url' })
+  getBackgroundUrl(): string | null {
+    return this.background ? `${process.env.APP_API_URL}/files/${this.background}` : null;
+  }
 }
 
 export default Rper;
