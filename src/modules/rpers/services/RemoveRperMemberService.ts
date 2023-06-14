@@ -21,6 +21,7 @@ export class RemoveRperMemberService {
 
     if (rperMemberIndex >= 0) {
       rper.members.splice(rperMemberIndex, 1);
+      rper.updated_at = new Date();
     }
 
     await this.rpersRepository.update(rper);
