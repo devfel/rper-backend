@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 
 import CreateRperService from '@modules/rpers/services/CreateRperService';
 import ListRpersService from '@modules/rpers/services/ListRpersService';
+import { classToClass } from 'class-transformer';
 
 export default class RpersController {
     public async create(request: Request, response: Response): Promise<Response> {
@@ -18,6 +19,6 @@ export default class RpersController {
         const listRpers = container.resolve(ListRpersService);
         const rpers = await listRpers.execute();
 
-        return response.json(rpers);
+        return response.json(classToClass(rpers));
     }
 }
