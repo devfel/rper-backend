@@ -3,7 +3,6 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  UpdateDateColumn,
   ManyToOne,
   JoinColumn,
   ManyToMany,
@@ -47,7 +46,7 @@ class Rper {
   @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn()
+  @Column({ default: 'now()'})
   updated_at: Date;
 
   @Expose({ name: 'background_url' })
