@@ -5,12 +5,12 @@ import { UpdateRperSecondaryDataService } from '@modules/rpers/services/UpdateRp
 
 export class UpdateRperSecondaryController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { content, editable } = request.body;
+    const { content } = request.body;
     const { rper_id } = request.params;
 
     const updateRperService = container.resolve(UpdateRperSecondaryDataService);
 
-    await updateRperService.execute({ content, rper_id, editable });
+    await updateRperService.execute({ content, rper_id });
 
     return response.status(204).json();
   }

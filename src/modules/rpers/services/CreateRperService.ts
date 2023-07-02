@@ -6,6 +6,7 @@ import AppError from '@shared/errors/AppError';
 import Rper from '../infra/typeorm/entities/Rper';
 import IRpersRepository from '../repositories/IRpersRepository';
 import { IRpersSecondaryDataRepository } from '../repositories/IRpersSecondaryDataRepository';
+import { IRperAcknowledgmentRepository } from '../repositories/IRperAcknowledgmentRepository';
 
 interface IRequestDTO {
     name: string;
@@ -21,6 +22,9 @@ class CreateRperService {
 
         @inject('RpersSecondaryDataRepository')
         private rpersSecondaryDataRepository: IRpersSecondaryDataRepository,
+
+        @inject('RperAcknowledgmentRepository')
+        private rperAcknowledgmentRepository: IRperAcknowledgmentRepository,
     ) { }
 
     public async execute({ name, coordinator_id }: IRequestDTO): Promise<Rper> {
@@ -41,7 +45,14 @@ class CreateRperService {
             status: RperStatus.UNSTARTED,
         });
 
+        const rperAcknowledgment = await this.rperAcknowledgmentRepository.create({
+            content: '',
+            rper_id: rper.rper_id,
+            status: RperStatus.UNSTARTED,
+        });
+
         rper.secondaryData = rperSecondaryData;
+        rper.acknowledgment = rperAcknowledgment;
 
         await this.rpersRepository.update(rper);
 

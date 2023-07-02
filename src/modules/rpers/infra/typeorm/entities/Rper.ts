@@ -12,6 +12,7 @@ import {
 import User from '@modules/users/infra/typeorm/entities/User';
 import { RperSecondaryData } from './RperSecondaryData';
 import { Expose } from 'class-transformer';
+import { RperAcknowledgment } from './RperAcknowledgment';
 
 @Entity('rpers')
 class Rper {
@@ -43,10 +44,14 @@ class Rper {
   @JoinColumn({ name: 'rper_id' })
   secondaryData: RperSecondaryData;
 
+  @OneToOne(() => RperAcknowledgment, acknowledgment => acknowledgment.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  acknowledgment: RperAcknowledgment;
+
   @CreateDateColumn()
   created_at: Date;
 
-  @Column({ default: 'now()'})
+  @Column({ default: 'now()' })
   updated_at: Date;
 
   @Expose({ name: 'background_url' })

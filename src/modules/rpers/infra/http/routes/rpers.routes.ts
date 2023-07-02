@@ -17,6 +17,7 @@ import { UploadImageController } from '../controllers/UploadImageController';
 import { GetRperSectionStatusController } from '../controllers/GetRperSectionStatusController';
 import { UpdateRperSectionStatusController } from '../controllers/UpdateRperSectionStatusController';
 import { CreateRperBackgroundController } from '../controllers/CreateRperBackgroundController';
+import { UpdateRperAcknowledgmentController } from '../controllers/UpdateRperAcknowledgmentController';
 
 const rpersRouter = Router();
 const rpersController = new RpersController();
@@ -31,6 +32,7 @@ const uploadImageController = new UploadImageController();
 const getRperSectionStatusController = new GetRperSectionStatusController();
 const updateRperSectionStatusController = new UpdateRperSectionStatusController();
 const createRperBackgroundController = new CreateRperBackgroundController();
+const updateRperAcknowledgmentController = new UpdateRperAcknowledgmentController();
 
 const upload = multer(uploadConfig);
 
@@ -76,7 +78,6 @@ rpersRouter.put(
   celebrate({
     [Segments.BODY]: {
       content: Joi.string(),
-      editable: Joi.boolean(),
     },
     [Segments.PARAMS]: {
       rper_id: Joi.string().uuid().required(),
@@ -85,6 +86,21 @@ rpersRouter.put(
   ensureRperMember,
   updateRperController.handle,
 );
+
+rpersRouter.put(
+  '/:rper_id/acknowledgment',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperAcknowledgmentController.handle,
+);
+
 
 rpersRouter.patch(
   '/:rper_id/members/:user_id',

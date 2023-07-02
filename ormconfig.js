@@ -1,4 +1,4 @@
-if (process.env.DATABASE_URL === 'postgres://docker:docker@localhost:5432/rper_database') {
+if (process.env.DATABASE_URL === 'postgres://postgres:docker@localhost:5432/rper_database') {
   module.exports = {
     type: 'postgres',
     url: process.env.DATABASE_URL,

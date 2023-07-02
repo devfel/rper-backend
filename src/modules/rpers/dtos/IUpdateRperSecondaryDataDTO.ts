@@ -1,5 +1,7 @@
+import { RperStatus } from 'enums'
+
 export interface IUpdateRperSecondaryDataDTO {
   rper_id: string;
   content?: string;
-  editable?: boolean;
+  status?: RperStatus;
 }
