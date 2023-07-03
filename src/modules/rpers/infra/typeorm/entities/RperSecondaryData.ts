@@ -3,32 +3,29 @@ import {
   CreateDateColumn,
   Entity,
   OneToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
-} from 'typeorm';
+} from 'typeorm'
 
-import Rper from './Rper';
+import Rper from './Rper'
 
 @Entity('rper_secondary_data')
 export class RperSecondaryData {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @Column({ type: 'uuid' })
-  rper_id: string;
+  @PrimaryColumn({ type: 'uuid' })
+  rper_id: string
 
   @Column()
-  content: string;
+  content: string
 
   @Column()
-  status: string;
+  status: string
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at: Date
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at: Date
 
   @OneToOne(() => Rper, rper => rper.secondaryData)
-  rper: Rper;
+  rper: Rper
 }
