@@ -10,15 +10,9 @@ export class CreateRperSecondaryData1666151651104 implements MigrationInterface 
             name: 'rper_secondary_data',
             columns: [
                 {
-                    name: 'id',
-                    type: 'uuid',
-                    isPrimary: true,
-                    generationStrategy: 'uuid',
-                    default: 'uuid_generate_v4()'
-                },
-                {
                     name: 'rper_id',
                     type: 'uuid',
+                    isPrimary: true
                 },
                 {
                     name: 'content',

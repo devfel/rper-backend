@@ -8,15 +8,9 @@ export class CreateRperAcknowledgment1688237209038 implements MigrationInterface
                 name: 'rper_acknowledgments',
                 columns: [
                     {
-                        name: 'id',
-                        type: 'uuid',
-                        isPrimary: true,
-                        generationStrategy: 'uuid',
-                        default: 'uuid_generate_v4()',
-                    },
-                    {
                         name: 'rper_id',
                         type: 'uuid',
+                        isPrimary: true
                     },
                     {
                         name: 'content',
@@ -24,7 +18,7 @@ export class CreateRperAcknowledgment1688237209038 implements MigrationInterface
                     },
                     {
                         name: 'status',
-                        type: 'varchar',
+                        type: 'rper_status',
                     },
                     {
                         name: 'created_at',

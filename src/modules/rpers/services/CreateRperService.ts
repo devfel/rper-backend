@@ -23,7 +23,7 @@ class CreateRperService {
         @inject('RpersSecondaryDataRepository')
         private rpersSecondaryDataRepository: IRpersSecondaryDataRepository,
 
-        @inject('RperAcknowledgmentRepository')
+        @inject('RpersAcknowledgmentRepository')
         private rperAcknowledgmentRepository: IRperAcknowledgmentRepository,
     ) { }
 

@@ -13,7 +13,11 @@ import IUserTokensRepository from '@modules/users/repositories/IUserTokensReposi
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 
 import { IRpersSecondaryDataRepository } from '@modules/rpers/repositories/IRpersSecondaryDataRepository';
+import { IRperAcknowledgmentRepository } from '@modules/rpers/repositories/IRperAcknowledgmentRepository';
+
 import { RpersSecondaryDataRepository } from '@modules/rpers/infra/typeorm/repositories/RpersSecondaryDataRepository';
+import { RperAcknowledgmentRepository } from '@modules/rpers/infra/typeorm/repositories/RperAcknowledgmentRepository';
+
 import { IRperEditResourceRepository } from '@modules/rpers/repositories/IRperEditResourceRepository';
 import { RperEditResourceRepository } from '@modules/rpers/infra/typeorm/repositories/RperEditResourceRepository';
 
@@ -23,6 +27,10 @@ container.registerSingleton<IUserTokensRepository>('UserTokensRepository', UserT
 container.registerSingleton<IRpersSecondaryDataRepository>(
   'RpersSecondaryDataRepository',
   RpersSecondaryDataRepository,
+);
+container.registerSingleton<IRperAcknowledgmentRepository>(
+  'RpersAcknowledgmentRepository',
+  RperAcknowledgmentRepository,
 );
 container.registerSingleton<IRperEditResourceRepository>(
   'RperEditResourceRepository',

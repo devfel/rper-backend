@@ -1,5 +1,5 @@
 import { ICreateRperAcknowledgmentDTO } from "@modules/rpers/dtos/ICreateRperAcknowledgmentDTO";
-import { IRperAcknowledgmentRepository } from "@modules/rpers/repositories/IRPERAcknowledgmentRepository";
+import { IRperAcknowledgmentRepository } from "@modules/rpers/repositories/IRperAcknowledgmentRepository";
 import { RperAcknowledgment } from "../entities/RperAcknowledgment";
 import { getRepository, Repository } from "typeorm";
 
