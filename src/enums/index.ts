@@ -7,4 +7,5 @@ export enum RperStatus {
 
 export enum RperSection {
   SECONDARY_DATA = 'secondary-data',
+  ACKNOWLEDGMENT = 'acknowledgment',
 }
