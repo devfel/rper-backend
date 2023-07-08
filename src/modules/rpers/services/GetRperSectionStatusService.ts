@@ -3,6 +3,7 @@ import { IRpersSecondaryDataRepository } from '../repositories/IRpersSecondaryDa
 import AppError from '@shared/errors/AppError'
 import { RperSection } from 'enums'
 import { IRperAcknowledgmentRepository } from '../repositories/IRperAcknowledgmentRepository'
+import { IRperHistoricalMappingRepository } from '../repositories/IRperHistoricalMappingRepository'
 
 interface ExecuteParams {
   rper_id: string
@@ -17,6 +18,9 @@ export class GetRperSectionStatusService {
 
     @inject('RpersAcknowledgmentRepository')
     private readonly rperAcknowledgmentRepository: IRperAcknowledgmentRepository,
+
+    @inject('RperHistoricalMappingRepository')
+    private rperHistoricalMappingRepository: IRperHistoricalMappingRepository,
   ) {}
 
   async execute({ rper_id, section }: ExecuteParams) {
@@ -32,6 +36,18 @@ export class GetRperSectionStatusService {
 
     if (section === RperSection.ACKNOWLEDGMENT) {
       const rper = await this.rperAcknowledgmentRepository.findByRperId(rper_id)
+
+      if (!rper) {
+        throw new AppError('RPER not found', 404)
+      }
+
+      return { status: rper.status }
+    }
+
+    if (section === RperSection.HISTORICAL_MAPPING) {
+      const rper = await this.rperHistoricalMappingRepository.findByRperId(
+        rper_id,
+      )
 
       if (!rper) {
         throw new AppError('RPER not found', 404)

@@ -2,7 +2,7 @@ services:
   database:
     image: postgres
     environment:
-      POSTGRES_USER: docker
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: rper_database
     volumes:
