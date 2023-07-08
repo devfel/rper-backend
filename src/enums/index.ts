@@ -9,4 +9,5 @@ export enum RperSection {
   SECONDARY_DATA = 'secondary-data',
   ACKNOWLEDGMENT = 'acknowledgment',
   HISTORICAL_MAPPING = 'historical-mapping',
+  TRANSECT_WALK = 'transect-walk',
 }

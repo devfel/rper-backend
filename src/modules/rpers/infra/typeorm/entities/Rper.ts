@@ -14,6 +14,7 @@ import { RperSecondaryData } from './RperSecondaryData'
 import { Expose } from 'class-transformer'
 import { RperAcknowledgment } from './RperAcknowledgment'
 import { RperHistoricalMapping } from './RperHistoricalMapping'
+import { RperTransectWalk } from './RperTransectWalk'
 
 @Entity('rpers')
 class Rper {
@@ -60,6 +61,14 @@ class Rper {
   )
   @JoinColumn({ name: 'rper_id' })
   historicalMapping: RperHistoricalMapping
+
+  @OneToOne(
+    () => RperTransectWalk,
+    historicalMapping => historicalMapping.rper,
+    { eager: true },
+  )
+  @JoinColumn({ name: 'rper_id' })
+  transectWalk: RperTransectWalk
 
   @CreateDateColumn()
   created_at: Date

@@ -5,6 +5,7 @@ import AppError from '@shared/errors/AppError'
 import { RperSection } from 'enums'
 import IRpersRepository from '../repositories/IRpersRepository'
 import { IRperHistoricalMappingRepository } from '../repositories/IRperHistoricalMappingRepository'
+import { IRperTransectWalkRepository } from '../repositories/IRperTransectWalkRepository'
 
 interface ExecuteParams {
   rper_id: string
@@ -23,6 +24,9 @@ export class UpdateRperSectionStatusService {
 
     @inject('RperHistoricalMappingRepository')
     private rperHistoricalMappingRepository: IRperHistoricalMappingRepository,
+
+    @inject('RperTransectWalkRepository')
+    private rperTransectWalkRepository: IRperTransectWalkRepository,
 
     @inject('RpersRepository')
     private readonly rpersRepository: IRpersRepository,
@@ -74,6 +78,23 @@ export class UpdateRperSectionStatusService {
       rper.updated_at = new Date()
 
       await this.rperHistoricalMappingRepository.update(historicalMapping)
+      await this.rpersRepository.update(rper)
+    }
+
+    if (section === RperSection.TRANSECT_WALK) {
+      const transectWalk = await this.rperTransectWalkRepository.findByRperId(
+        rper_id,
+      )
+      const rper = await this.rpersRepository.findById(rper_id)
+
+      if (!transectWalk || !rper) {
+        throw new AppError('RPER not found', 404)
+      }
+
+      transectWalk.status = new_status
+      rper.updated_at = new Date()
+
+      await this.rperTransectWalkRepository.update(transectWalk)
       await this.rpersRepository.update(rper)
     }
   }

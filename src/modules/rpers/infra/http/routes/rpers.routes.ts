@@ -19,6 +19,7 @@ import { UpdateRperSectionStatusController } from '../controllers/UpdateRperSect
 import { CreateRperBackgroundController } from '../controllers/CreateRperBackgroundController'
 import { UpdateRperAcknowledgmentController } from '../controllers/UpdateRperAcknowledgmentController'
 import { UpdateRperHistoricalMappingController } from '../controllers/UpdateRperHistoricalMappingController'
+import { UpdateRperTransectWalkController } from '../controllers/UpdateRperTransectWalkController'
 
 const rpersRouter = Router()
 const rpersController = new RpersController()
@@ -38,6 +39,7 @@ const updateRperAcknowledgmentController =
   new UpdateRperAcknowledgmentController()
 const updateRperHistoricalMappingController =
   new UpdateRperHistoricalMappingController()
+const updateRperTransectWalkController = new UpdateRperTransectWalkController()
 
 const upload = multer(uploadConfig)
 
@@ -118,6 +120,20 @@ rpersRouter.put(
   }),
   ensureRperMember,
   updateRperHistoricalMappingController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/transect-walk',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperTransectWalkController.handle,
 )
 
 rpersRouter.patch(

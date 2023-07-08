@@ -22,6 +22,8 @@ import { IRperEditResourceRepository } from '@modules/rpers/repositories/IRperEd
 import { RperEditResourceRepository } from '@modules/rpers/infra/typeorm/repositories/RperEditResourceRepository'
 import { IRperHistoricalMappingRepository } from '@modules/rpers/repositories/IRperHistoricalMappingRepository'
 import { RperHistoricalMappingRepository } from '@modules/rpers/infra/typeorm/repositories/RperHistoricalMappingRepository'
+import { IRperTransectWalkRepository } from '@modules/rpers/repositories/IRperTransectWalkRepository'
+import { RperTransectWalkRepository } from '@modules/rpers/infra/typeorm/repositories/RperTransectWalkRepository'
 
 container.registerSingleton<IRpersRepository>(
   'RpersRepository',
@@ -50,4 +52,8 @@ container.registerSingleton<IRperEditResourceRepository>(
 container.registerSingleton<IRperHistoricalMappingRepository>(
   'RperHistoricalMappingRepository',
   RperHistoricalMappingRepository,
+)
+container.registerSingleton<IRperTransectWalkRepository>(
+  'RperTransectWalkRepository',
+  RperTransectWalkRepository,
 )

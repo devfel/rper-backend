@@ -8,6 +8,7 @@ import IRpersRepository from '../repositories/IRpersRepository'
 import { IRpersSecondaryDataRepository } from '../repositories/IRpersSecondaryDataRepository'
 import { IRperAcknowledgmentRepository } from '../repositories/IRperAcknowledgmentRepository'
 import { IRperHistoricalMappingRepository } from '../repositories/IRperHistoricalMappingRepository'
+import { IRperTransectWalkRepository } from '../repositories/IRperTransectWalkRepository'
 
 interface IRequestDTO {
   name: string
@@ -28,6 +29,9 @@ class CreateRperService {
 
     @inject('RperHistoricalMappingRepository')
     private rperHistoricalMappingRepository: IRperHistoricalMappingRepository,
+
+    @inject('RperTransectWalkRepository')
+    private rperTransectWalkRepository: IRperTransectWalkRepository,
   ) {}
 
   public async execute({ name, coordinator_id }: IRequestDTO): Promise<Rper> {
@@ -61,9 +65,16 @@ class CreateRperService {
         status: RperStatus.UNSTARTED,
       })
 
+    const rperTransectWalk = await this.rperTransectWalkRepository.create({
+      content: '',
+      rper_id: rper.rper_id,
+      status: RperStatus.UNSTARTED,
+    })
+
     rper.secondaryData = rperSecondaryData
     rper.acknowledgment = rperAcknowledgment
     rper.historicalMapping = rperHistoricalMapping
+    rper.transectWalk = rperTransectWalk
 
     await this.rpersRepository.update(rper)
 
