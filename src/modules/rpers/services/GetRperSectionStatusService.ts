@@ -1,14 +1,16 @@
-import { inject, injectable } from 'tsyringe'
-import { IRpersSecondaryDataRepository } from '../repositories/IRpersSecondaryDataRepository'
-import AppError from '@shared/errors/AppError'
-import { RperSection } from 'enums'
-import { IRperAcknowledgmentRepository } from '../repositories/IRperAcknowledgmentRepository'
-import { IRperHistoricalMappingRepository } from '../repositories/IRperHistoricalMappingRepository'
+import { inject, injectable } from 'tsyringe';
+import { IRpersSecondaryDataRepository } from '../repositories/IRpersSecondaryDataRepository';
+import { IRperAcknowledgmentRepository } from '../repositories/IRperAcknowledgmentRepository';
+import { IRperFinalConsiderationRepository } from '../repositories/IRperFinalConsiderationRepository';
+import { IRperHistoricalMappingRepository } from '../repositories/IRperHistoricalMappingRepository';
 import { IRperTransectWalkRepository } from '../repositories/IRperTransectWalkRepository'
 
+import AppError from '@shared/errors/AppError';
+import { RperSection } from 'enums';
+
 interface ExecuteParams {
-  rper_id: string
-  section: string
+  rper_id: string;
+  section: string;
 }
 
 @injectable()
@@ -19,23 +21,25 @@ export class GetRperSectionStatusService {
 
     @inject('RpersAcknowledgmentRepository')
     private readonly rperAcknowledgmentRepository: IRperAcknowledgmentRepository,
-
+     
     @inject('RperHistoricalMappingRepository')
-    private rperHistoricalMappingRepository: IRperHistoricalMappingRepository,
-
+    private readonly rperHistoricalMappingRepository: IRperHistoricalMappingRepository,
+     
     @inject('RperTransectWalkRepository')
-    private rperTransectWalkRepository: IRperTransectWalkRepository,
-  ) {}
+    private readonly rperTransectWalkRepository: IRperTransectWalkRepository,
+     
+    @inject('RpersFinalConsiderationRepository')
+    private readonly rperFinalConsiderationRepository: IRperFinalConsiderationRepository,
 
   async execute({ rper_id, section }: ExecuteParams) {
     if (section === RperSection.SECONDARY_DATA) {
-      const rper = await this.rpersSecondaryDataRepository.findByRperId(rper_id)
+      const rper = await this.rpersSecondaryDataRepository.findByRperId(rper_id);
 
       if (!rper) {
-        throw new AppError('RPER not found', 404)
+        throw new AppError('RPER not found', 404);
       }
 
-      return { status: rper.status }
+      return { status: rper.status };
     }
 
     if (section === RperSection.ACKNOWLEDGMENT) {
@@ -45,7 +49,17 @@ export class GetRperSectionStatusService {
         throw new AppError('RPER not found', 404)
       }
 
-      return { status: rper.status }
+      return { status: rper.status };
+    }
+
+    if (section === RperSection.FINALCONSIDERATION) {
+      const rper = await this.rperFinalConsiderationRepository.findByRperId(rper_id)
+
+      if (!rper) {
+        throw new AppError('RPER not found', 404)
+      }
+
+      return { status: rper.status };
     }
 
     if (section === RperSection.HISTORICAL_MAPPING) {

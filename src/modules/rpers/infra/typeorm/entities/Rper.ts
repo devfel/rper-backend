@@ -8,13 +8,15 @@ import {
   ManyToMany,
   JoinTable,
   OneToOne,
-} from 'typeorm'
-import User from '@modules/users/infra/typeorm/entities/User'
-import { RperSecondaryData } from './RperSecondaryData'
-import { Expose } from 'class-transformer'
-import { RperAcknowledgment } from './RperAcknowledgment'
-import { RperHistoricalMapping } from './RperHistoricalMapping'
-import { RperTransectWalk } from './RperTransectWalk'
+} from 'typeorm';
+import User from '@modules/users/infra/typeorm/entities/User';
+import { Expose } from 'class-transformer';
+import { RperSecondaryData } from './RperSecondaryData';
+import { RperAcknowledgment } from './RperAcknowledgment';
+import { RperFinalConsideration } from './RperFinalConsideration';
+import { RperHistoricalMapping } from './RperHistoricalMapping';
+import { RperTransectWalk } from './RperTransectWalk';
+
 
 @Entity('rpers')
 class Rper {
@@ -42,33 +44,25 @@ class Rper {
   })
   members: User[]
 
-  @OneToOne(() => RperSecondaryData, secondaryData => secondaryData.rper, {
-    eager: true,
-  })
+  @OneToOne(() => RperSecondaryData, secondaryData => secondaryData.rper, { eager: true })
   @JoinColumn({ name: 'rper_id' })
-  secondaryData: RperSecondaryData
+  secondaryData: RperSecondaryData;
 
-  @OneToOne(() => RperAcknowledgment, acknowledgment => acknowledgment.rper, {
-    eager: true,
-  })
+  @OneToOne(() => RperAcknowledgment, acknowledgment => acknowledgment.rper, { eager: true })
   @JoinColumn({ name: 'rper_id' })
-  acknowledgment: RperAcknowledgment
+  acknowledgment: RperAcknowledgment;
 
-  @OneToOne(
-    () => RperHistoricalMapping,
-    historicalMapping => historicalMapping.rper,
-    { eager: true },
-  )
+  @OneToOne(() => RperHistoricalMapping, historicalMapping => historicalMapping.rper, { eager: true })
   @JoinColumn({ name: 'rper_id' })
-  historicalMapping: RperHistoricalMapping
-
-  @OneToOne(
-    () => RperTransectWalk,
-    historicalMapping => historicalMapping.rper,
-    { eager: true },
-  )
+  historicalMapping: RperHistoricalMapping;
+  
+  @OneToOne(() => RperTransectWalk, historicalMapping => historicalMapping.rper, { eager: true })
   @JoinColumn({ name: 'rper_id' })
-  transectWalk: RperTransectWalk
+  transectWalk: RperTransectWalk;
+  
+  @OneToOne(() => RperFinalConsideration, finalconsideration => finalconsideration.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  finalconsideration: RperFinalConsideration;
 
   @CreateDateColumn()
   created_at: Date
