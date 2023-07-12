@@ -16,8 +16,10 @@ import { IRpersSecondaryDataRepository } from '@modules/rpers/repositories/IRper
 import { RpersSecondaryDataRepository } from '@modules/rpers/infra/typeorm/repositories/RpersSecondaryDataRepository';
 import { IRperAcknowledgmentRepository } from '@modules/rpers/repositories/IRperAcknowledgmentRepository';
 import { RperAcknowledgmentRepository } from '@modules/rpers/infra/typeorm/repositories/RperAcknowledgmentRepository';
-import { IRperFinalConsiderationRepository } from '@modules/rpers/repositories/IRperFinalConsiderationRepository'
-import { RperFinalConsiderationRepository } from '@modules/rpers/infra/typeorm/repositories/RperFinalConsiderationRepository'
+import { IRperFinalConsiderationRepository } from '@modules/rpers/repositories/IRperFinalConsiderationRepository';
+import { RperFinalConsiderationRepository } from '@modules/rpers/infra/typeorm/repositories/RperFinalConsiderationRepository';
+import { IRperHistoricalMappingRepository } from '@modules/rpers/repositories/IRperHistoricalMappingRepository';
+import { RperHistoricalMappingRepository } from '@modules/rpers/infra/typeorm/repositories/RperHistoricalMappingRepository';
 
 
 import { IRperEditResourceRepository } from '@modules/rpers/repositories/IRperEditResourceRepository';
@@ -37,7 +39,12 @@ container.registerSingleton<IRperAcknowledgmentRepository>(
 container.registerSingleton<IRperFinalConsiderationRepository>(
   'RpersFinalConsiderationRepository',
   RperFinalConsiderationRepository,
-)
+);
+container.registerSingleton<IRperHistoricalMappingRepository>(
+  'RperHistoricalMappingRepository',
+  RperHistoricalMappingRepository,
+);
+
 container.registerSingleton<IRperEditResourceRepository>(
   'RperEditResourceRepository',
   RperEditResourceRepository,

@@ -14,24 +14,25 @@ import { Expose } from 'class-transformer';
 import { RperSecondaryData } from './RperSecondaryData';
 import { RperAcknowledgment } from './RperAcknowledgment';
 import { RperFinalConsideration } from './RperFinalConsideration';
+import { RperHistoricalMapping } from './RperHistoricalMapping';
 
 @Entity('rpers')
 class Rper {
   @PrimaryGeneratedColumn('uuid')
-  rper_id: string;
+  rper_id: string
 
   @Column()
-  name: string;
+  name: string
 
   @Column()
-  coordinator_id: string;
+  coordinator_id: string
 
   @Column()
-  background: string;
+  background: string
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'coordinator_id' })
-  coordinator: User;
+  coordinator: User
 
   @ManyToMany(() => User, { eager: true })
   @JoinTable({
@@ -39,30 +40,44 @@ class Rper {
     joinColumns: [{ name: 'rper_id' }],
     inverseJoinColumns: [{ name: 'user_id' }],
   })
-  members: User[];
+  members: User[]
 
-  @OneToOne(() => RperSecondaryData, secondaryData => secondaryData.rper, { eager: true })
+  @OneToOne(() => RperSecondaryData, secondaryData => secondaryData.rper, {
+    eager: true,
+  })
   @JoinColumn({ name: 'rper_id' })
-  secondaryData: RperSecondaryData;
+  secondaryData: RperSecondaryData
 
-  @OneToOne(() => RperAcknowledgment, acknowledgment => acknowledgment.rper, { eager: true })
+  @OneToOne(() => RperAcknowledgment, acknowledgment => acknowledgment.rper, {
+    eager: true,
+  })
   @JoinColumn({ name: 'rper_id' })
-  acknowledgment: RperAcknowledgment;
+  acknowledgment: RperAcknowledgment
+
+  @OneToOne(
+    () => RperHistoricalMapping,
+    historicalMapping => historicalMapping.rper,
+    { eager: true },
+  )
+  @JoinColumn({ name: 'rper_id' })
+  historicalMapping: RperHistoricalMapping
 
   @OneToOne(() => RperFinalConsideration, finalconsideration => finalconsideration.rper, { eager: true })
   @JoinColumn({ name: 'rper_id' })
   finalconsideration: RperFinalConsideration;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at: Date
 
   @Column({ default: 'now()' })
-  updated_at: Date;
+  updated_at: Date
 
   @Expose({ name: 'background_url' })
   getBackgroundUrl(): string | null {
-    return this.background ? `${process.env.APP_API_URL}/files/${this.background}` : null;
+    return this.background
+      ? `${process.env.APP_API_URL}/files/${this.background}`
+      : null
   }
 }
 
-export default Rper;
+export default Rper

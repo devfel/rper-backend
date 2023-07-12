@@ -19,7 +19,7 @@ import { UpdateRperSectionStatusController } from '../controllers/UpdateRperSect
 import { CreateRperBackgroundController } from '../controllers/CreateRperBackgroundController';
 import { UpdateRperAcknowledgmentController } from '../controllers/UpdateRperAcknowledgmentController';
 import { UpdateRperFinalConsiderationController } from '../controllers/UpdateRperFinalConsiderationController';
-
+import { UpdateRperHistoricalMappingController } from '../controllers/UpdateRperHistoricalMappingController';
 
 const rpersRouter = Router();
 const rpersController = new RpersController();
@@ -36,11 +36,12 @@ const updateRperSectionStatusController = new UpdateRperSectionStatusController(
 const createRperBackgroundController = new CreateRperBackgroundController();
 const updateRperAcknowledgmentController = new UpdateRperAcknowledgmentController();
 const updateRperFinalConsiderationController = new UpdateRperFinalConsiderationController();
+const updateRperHistoricalMappingController = new UpdateRperHistoricalMappingController();
 
 const upload = multer(uploadConfig);
 
 //Middleware to ensure the user is logged in before listing RPERs and Creating new one.
-rpersRouter.use(ensureAuthenticated);
+rpersRouter.use(ensureAuthenticated)
 
 rpersRouter.post(
   '/',
@@ -51,9 +52,9 @@ rpersRouter.post(
     },
   }),
   rpersController.create,
-);
+)
 
-rpersRouter.get('/', rpersController.index);
+rpersRouter.get('/', rpersController.index)
 
 rpersRouter.get(
   '/:id',
@@ -63,7 +64,7 @@ rpersRouter.get(
     },
   }),
   getRperByIdController.handle,
-);
+)
 
 rpersRouter.post(
   '/members',
@@ -74,7 +75,7 @@ rpersRouter.post(
     },
   }),
   createRpersMembersController.handle,
-);
+)
 
 rpersRouter.put(
   '/:rper_id/secondary-data',
@@ -88,7 +89,7 @@ rpersRouter.put(
   }),
   ensureRperMember,
   updateRperController.handle,
-);
+)
 
 rpersRouter.put(
   '/:rper_id/acknowledgment',
@@ -102,7 +103,7 @@ rpersRouter.put(
   }),
   ensureRperMember,
   updateRperAcknowledgmentController.handle,
-);
+)
 
 rpersRouter.put(
   '/:rper_id/finalconsideration',
@@ -118,6 +119,20 @@ rpersRouter.put(
   updateRperFinalConsiderationController.handle,
 );
 
+rpersRouter.put(
+  '/:rper_id/historical-mapping',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperHistoricalMappingController.handle,
+);
+
 rpersRouter.patch(
   '/:rper_id/members/:user_id',
   celebrate({
@@ -128,7 +143,7 @@ rpersRouter.patch(
   }),
   ensureRperMember,
   removeRperMemberController.handle,
-);
+)
 
 // Editing rpers resources
 rpersRouter.post(
@@ -141,7 +156,7 @@ rpersRouter.post(
     },
   }),
   createRperEditResourceController.handle,
-);
+)
 
 rpersRouter.get(
   '/resources/:rper_id/:resource',
@@ -152,7 +167,7 @@ rpersRouter.get(
     },
   }),
   findRperEditResourceController.handle,
-);
+)
 
 rpersRouter.delete(
   '/resources/:rper_id/:user_id/:resource',
@@ -164,9 +179,13 @@ rpersRouter.delete(
     },
   }),
   deleteRperEditResourceController.handle,
-);
+)
 
-rpersRouter.post('/images', upload.single('image'), uploadImageController.handle);
+rpersRouter.post(
+  '/images',
+  upload.single('image'),
+  uploadImageController.handle,
+)
 
 rpersRouter.get(
   '/:rper_id/:section/status',
@@ -177,7 +196,7 @@ rpersRouter.get(
     },
   }),
   getRperSectionStatusController.handle,
-);
+)
 
 rpersRouter.patch(
   '/:rper_id/:section/status',
@@ -191,12 +210,12 @@ rpersRouter.patch(
     },
   }),
   updateRperSectionStatusController.handle,
-);
+)
 
 rpersRouter.patch(
   '/:rper_id/background',
   upload.single('background'),
   createRperBackgroundController.handle,
-);
+)
 
-export default rpersRouter;
+export default rpersRouter

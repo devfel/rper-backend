@@ -8,6 +8,8 @@ import IRpersRepository from '../repositories/IRpersRepository';
 import { IRpersSecondaryDataRepository } from '../repositories/IRpersSecondaryDataRepository';
 import { IRperAcknowledgmentRepository } from '../repositories/IRperAcknowledgmentRepository';
 import { IRperFinalConsiderationRepository } from '../repositories/IRperFinalConsiderationRepository';
+import { IRperHistoricalMappingRepository } from '../repositories/IRperHistoricalMappingRepository';
+
 
 interface IRequestDTO {
     name: string;
@@ -26,6 +28,9 @@ class CreateRperService {
 
         @inject('RpersAcknowledgmentRepository')
         private rperAcknowledgmentRepository: IRperAcknowledgmentRepository,
+         
+        @inject('RperHistoricalMappingRepository')
+        private rperHistoricalMappingRepository: IRperHistoricalMappingRepository,
 
         @inject('RpersFinalConsiderationRepository')
         private rperFinalConsiderationRepository: IRperFinalConsiderationRepository,
@@ -60,10 +65,17 @@ class CreateRperService {
             rper_id: rper.rper_id,
             status: RperStatus.UNSTARTED,
         });
+      
+        const rperHistoricalMapping = await this.rperHistoricalMappingRepository.create({
+          content: '',
+          rper_id: rper.rper_id,
+          status: RperStatus.UNSTARTED,
+        })
 
         rper.secondaryData = rperSecondaryData;
         rper.acknowledgment = rperAcknowledgment;
         rper.finalconsideration = rperFinalConsideration;
+        rper.historicalMapping = rperHistoricalMapping
 
         await this.rpersRepository.update(rper);
 
