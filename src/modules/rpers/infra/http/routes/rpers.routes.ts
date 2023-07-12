@@ -18,6 +18,8 @@ import { GetRperSectionStatusController } from '../controllers/GetRperSectionSta
 import { UpdateRperSectionStatusController } from '../controllers/UpdateRperSectionStatusController';
 import { CreateRperBackgroundController } from '../controllers/CreateRperBackgroundController';
 import { UpdateRperAcknowledgmentController } from '../controllers/UpdateRperAcknowledgmentController';
+import { UpdateRperFinalConsiderationController } from '../controllers/UpdateRperFinalConsiderationController';
+
 
 const rpersRouter = Router();
 const rpersController = new RpersController();
@@ -33,6 +35,7 @@ const getRperSectionStatusController = new GetRperSectionStatusController();
 const updateRperSectionStatusController = new UpdateRperSectionStatusController();
 const createRperBackgroundController = new CreateRperBackgroundController();
 const updateRperAcknowledgmentController = new UpdateRperAcknowledgmentController();
+const updateRperFinalConsiderationController = new UpdateRperFinalConsiderationController();
 
 const upload = multer(uploadConfig);
 
@@ -101,6 +104,19 @@ rpersRouter.put(
   updateRperAcknowledgmentController.handle,
 );
 
+rpersRouter.put(
+  '/:rper_id/finalconsideration',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperFinalConsiderationController.handle,
+);
 
 rpersRouter.patch(
   '/:rper_id/members/:user_id',

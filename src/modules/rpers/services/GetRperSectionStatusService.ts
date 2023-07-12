@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import { IRpersSecondaryDataRepository } from '../repositories/IRpersSecondaryDataRepository';
-import { IRperAcknowledgmentRepository } from '../repositories/IRperAcknowledgmentRepository'
+import { IRperAcknowledgmentRepository } from '../repositories/IRperAcknowledgmentRepository';
+import { IRperFinalConsiderationRepository } from '../repositories/IRperFinalConsiderationRepository';
 import AppError from '@shared/errors/AppError';
 import { RperSection } from 'enums';
 
@@ -17,6 +18,9 @@ export class GetRperSectionStatusService {
 
     @inject('RpersAcknowledgmentRepository')
     private readonly rperAcknowledgmentRepository: IRperAcknowledgmentRepository,
+
+    @inject('RpersFinalConsiderationRepository')
+    private readonly rperFinalConsiderationRepository: IRperFinalConsiderationRepository,
   ) { }
 
   async execute({ rper_id, section }: ExecuteParams) {
@@ -32,6 +36,16 @@ export class GetRperSectionStatusService {
 
     if (section === RperSection.ACKNOWLEDGMENT) {
       const rper = await this.rperAcknowledgmentRepository.findByRperId(rper_id)
+
+      if (!rper) {
+        throw new AppError('RPER not found', 404)
+      }
+
+      return { status: rper.status };
+    }
+
+    if (section === RperSection.FINALCONSIDERATION) {
+      const rper = await this.rperFinalConsiderationRepository.findByRperId(rper_id)
 
       if (!rper) {
         throw new AppError('RPER not found', 404)
