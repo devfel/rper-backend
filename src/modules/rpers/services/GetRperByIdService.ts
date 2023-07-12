@@ -27,7 +27,6 @@ export class GetRperByIdService {
     ]
 
     const statusCompleted = rperSections.reduce((acc, section) => {
-      console.log(section)
       if (
         section &&
         (section.status === RperStatus.COMPLETED ||
@@ -40,8 +39,6 @@ export class GetRperByIdService {
     }, 0)
 
     const progress = ((statusCompleted / rperSections.length) * 100).toFixed(0)
-
-    console.log(progress)
 
     Object.assign(rper, { progress })
 
