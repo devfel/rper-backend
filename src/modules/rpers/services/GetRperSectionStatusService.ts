@@ -21,15 +21,16 @@ export class GetRperSectionStatusService {
 
     @inject('RpersAcknowledgmentRepository')
     private readonly rperAcknowledgmentRepository: IRperAcknowledgmentRepository,
-     
+
     @inject('RperHistoricalMappingRepository')
     private readonly rperHistoricalMappingRepository: IRperHistoricalMappingRepository,
-     
+
     @inject('RperTransectWalkRepository')
     private readonly rperTransectWalkRepository: IRperTransectWalkRepository,
-     
+
     @inject('RpersFinalConsiderationRepository')
     private readonly rperFinalConsiderationRepository: IRperFinalConsiderationRepository,
+  ) { }
 
   async execute({ rper_id, section }: ExecuteParams) {
     if (section === RperSection.SECONDARY_DATA) {
