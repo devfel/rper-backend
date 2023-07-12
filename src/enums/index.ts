@@ -3,6 +3,7 @@ export enum RperStatus {
   COMPLETED = 'completed',
   NOT_AVAILABLE = 'not_available',
   UNSTARTED = 'unstarted',
+  NOT_APPLICABLE = 'not_applicable',
 }
 
 export enum RperSection {
