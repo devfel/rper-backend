@@ -8,12 +8,13 @@ import {
   ManyToMany,
   JoinTable,
   OneToOne,
-} from 'typeorm'
-import User from '@modules/users/infra/typeorm/entities/User'
-import { RperSecondaryData } from './RperSecondaryData'
-import { Expose } from 'class-transformer'
-import { RperAcknowledgment } from './RperAcknowledgment'
-import { RperHistoricalMapping } from './RperHistoricalMapping'
+} from 'typeorm';
+import User from '@modules/users/infra/typeorm/entities/User';
+import { Expose } from 'class-transformer';
+import { RperSecondaryData } from './RperSecondaryData';
+import { RperAcknowledgment } from './RperAcknowledgment';
+import { RperFinalConsideration } from './RperFinalConsideration';
+import { RperHistoricalMapping } from './RperHistoricalMapping';
 
 @Entity('rpers')
 class Rper {
@@ -60,6 +61,10 @@ class Rper {
   )
   @JoinColumn({ name: 'rper_id' })
   historicalMapping: RperHistoricalMapping
+
+  @OneToOne(() => RperFinalConsideration, finalconsideration => finalconsideration.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  finalconsideration: RperFinalConsideration;
 
   @CreateDateColumn()
   created_at: Date

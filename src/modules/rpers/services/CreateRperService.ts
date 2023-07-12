@@ -1,74 +1,86 @@
-import { RperStatus } from 'enums'
-import { injectable, inject } from 'tsyringe'
+import { RperStatus } from 'enums';
+import { injectable, inject } from 'tsyringe';
 
-import AppError from '@shared/errors/AppError'
+import AppError from '@shared/errors/AppError';
 
-import Rper from '../infra/typeorm/entities/Rper'
-import IRpersRepository from '../repositories/IRpersRepository'
-import { IRpersSecondaryDataRepository } from '../repositories/IRpersSecondaryDataRepository'
-import { IRperAcknowledgmentRepository } from '../repositories/IRperAcknowledgmentRepository'
-import { IRperHistoricalMappingRepository } from '../repositories/IRperHistoricalMappingRepository'
+import Rper from '../infra/typeorm/entities/Rper';
+import IRpersRepository from '../repositories/IRpersRepository';
+import { IRpersSecondaryDataRepository } from '../repositories/IRpersSecondaryDataRepository';
+import { IRperAcknowledgmentRepository } from '../repositories/IRperAcknowledgmentRepository';
+import { IRperFinalConsiderationRepository } from '../repositories/IRperFinalConsiderationRepository';
+import { IRperHistoricalMappingRepository } from '../repositories/IRperHistoricalMappingRepository';
+
 
 interface IRequestDTO {
-  name: string
-  coordinator_id: string
+    name: string;
+    coordinator_id: string;
 }
 
 @injectable()
 class CreateRperService {
-  constructor(
-    @inject('RpersRepository')
-    private rpersRepository: IRpersRepository,
 
-    @inject('RpersSecondaryDataRepository')
-    private rpersSecondaryDataRepository: IRpersSecondaryDataRepository,
+    constructor(
+        @inject('RpersRepository')
+        private rpersRepository: IRpersRepository,
 
-    @inject('RpersAcknowledgmentRepository')
-    private rperAcknowledgmentRepository: IRperAcknowledgmentRepository,
+        @inject('RpersSecondaryDataRepository')
+        private rpersSecondaryDataRepository: IRpersSecondaryDataRepository,
 
-    @inject('RperHistoricalMappingRepository')
-    private rperHistoricalMappingRepository: IRperHistoricalMappingRepository,
-  ) {}
+        @inject('RpersAcknowledgmentRepository')
+        private rperAcknowledgmentRepository: IRperAcknowledgmentRepository,
+         
+        @inject('RperHistoricalMappingRepository')
+        private rperHistoricalMappingRepository: IRperHistoricalMappingRepository,
 
-  public async execute({ name, coordinator_id }: IRequestDTO): Promise<Rper> {
-    const findRperWithSameName = await this.rpersRepository.findRperByName(name)
+        @inject('RpersFinalConsiderationRepository')
+        private rperFinalConsiderationRepository: IRperFinalConsiderationRepository,
+    ) { }
 
-    if (findRperWithSameName) {
-      throw new AppError('RPER with same name already exists.')
+    public async execute({ name, coordinator_id }: IRequestDTO): Promise<Rper> {
+        const findRperWithSameName = await this.rpersRepository.findRperByName(name);
+
+        if (findRperWithSameName) {
+            throw new AppError("RPER with same name already exists.");
+        }
+
+        const rper = await this.rpersRepository.create({
+            name,
+            coordinator_id,
+        });
+
+        const rperSecondaryData = await this.rpersSecondaryDataRepository.create({
+            content: '',
+            rper_id: rper.rper_id,
+            status: RperStatus.UNSTARTED,
+        });
+
+        const rperAcknowledgment = await this.rperAcknowledgmentRepository.create({
+            content: '',
+            rper_id: rper.rper_id,
+            status: RperStatus.UNSTARTED,
+        });
+
+        const rperFinalConsideration = await this.rperFinalConsiderationRepository.create({
+            content: '',
+            rper_id: rper.rper_id,
+            status: RperStatus.UNSTARTED,
+        });
+      
+        const rperHistoricalMapping = await this.rperHistoricalMappingRepository.create({
+          content: '',
+          rper_id: rper.rper_id,
+          status: RperStatus.UNSTARTED,
+        })
+
+        rper.secondaryData = rperSecondaryData;
+        rper.acknowledgment = rperAcknowledgment;
+        rper.finalconsideration = rperFinalConsideration;
+        rper.historicalMapping = rperHistoricalMapping
+
+        await this.rpersRepository.update(rper);
+
+        return rper;
     }
-
-    const rper = await this.rpersRepository.create({
-      name,
-      coordinator_id,
-    })
-
-    const rperSecondaryData = await this.rpersSecondaryDataRepository.create({
-      content: '',
-      rper_id: rper.rper_id,
-      status: RperStatus.UNSTARTED,
-    })
-
-    const rperAcknowledgment = await this.rperAcknowledgmentRepository.create({
-      content: '',
-      rper_id: rper.rper_id,
-      status: RperStatus.UNSTARTED,
-    })
-
-    const rperHistoricalMapping =
-      await this.rperHistoricalMappingRepository.create({
-        content: '',
-        rper_id: rper.rper_id,
-        status: RperStatus.UNSTARTED,
-      })
-
-    rper.secondaryData = rperSecondaryData
-    rper.acknowledgment = rperAcknowledgment
-    rper.historicalMapping = rperHistoricalMapping
-
-    await this.rpersRepository.update(rper)
-
-    return rper
-  }
 }
 
-export default CreateRperService
+export default CreateRperService;

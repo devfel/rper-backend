@@ -1,45 +1,44 @@
-import { Router } from 'express'
-import { celebrate, Segments, Joi } from 'celebrate'
+import { Router } from 'express';
+import { celebrate, Segments, Joi } from 'celebrate';
 
-import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated'
-import RpersController from '../controllers/RpersController'
-import { CreateRpersMembersController } from '../controllers/CreateRpersMembersController'
-import { UpdateRperSecondaryController } from '../controllers/UpdateRperSecondaryController'
-import { ensureRperMember } from '../middlewares/ensureRperMember'
-import { GetRperByIdController } from '../controllers/GetRperByIdController'
-import { RemoveRperMemberController } from '../controllers/RemoveRperMemberController'
-import { CreateRperEditResourceController } from '../controllers/CreateRperEditResourceController'
-import { FindRperEditResourceController } from '../controllers/FindRperEditResourceController'
-import { DeleteRperEditResourceController } from '../controllers/DeleteRperEditResourceController'
-import uploadConfig from '@config/upload'
-import multer from 'multer'
-import { UploadImageController } from '../controllers/UploadImageController'
-import { GetRperSectionStatusController } from '../controllers/GetRperSectionStatusController'
-import { UpdateRperSectionStatusController } from '../controllers/UpdateRperSectionStatusController'
-import { CreateRperBackgroundController } from '../controllers/CreateRperBackgroundController'
-import { UpdateRperAcknowledgmentController } from '../controllers/UpdateRperAcknowledgmentController'
-import { UpdateRperHistoricalMappingController } from '../controllers/UpdateRperHistoricalMappingController'
+import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+import RpersController from '../controllers/RpersController';
+import { CreateRpersMembersController } from '../controllers/CreateRpersMembersController';
+import { UpdateRperSecondaryController } from '../controllers/UpdateRperSecondaryController';
+import { ensureRperMember } from '../middlewares/ensureRperMember';
+import { GetRperByIdController } from '../controllers/GetRperByIdController';
+import { RemoveRperMemberController } from '../controllers/RemoveRperMemberController';
+import { CreateRperEditResourceController } from '../controllers/CreateRperEditResourceController';
+import { FindRperEditResourceController } from '../controllers/FindRperEditResourceController';
+import { DeleteRperEditResourceController } from '../controllers/DeleteRperEditResourceController';
+import uploadConfig from '@config/upload';
+import multer from 'multer';
+import { UploadImageController } from '../controllers/UploadImageController';
+import { GetRperSectionStatusController } from '../controllers/GetRperSectionStatusController';
+import { UpdateRperSectionStatusController } from '../controllers/UpdateRperSectionStatusController';
+import { CreateRperBackgroundController } from '../controllers/CreateRperBackgroundController';
+import { UpdateRperAcknowledgmentController } from '../controllers/UpdateRperAcknowledgmentController';
+import { UpdateRperFinalConsiderationController } from '../controllers/UpdateRperFinalConsiderationController';
+import { UpdateRperHistoricalMappingController } from '../controllers/UpdateRperHistoricalMappingController';
 
-const rpersRouter = Router()
-const rpersController = new RpersController()
-const createRpersMembersController = new CreateRpersMembersController()
-const updateRperController = new UpdateRperSecondaryController()
-const getRperByIdController = new GetRperByIdController()
-const removeRperMemberController = new RemoveRperMemberController()
-const createRperEditResourceController = new CreateRperEditResourceController()
-const findRperEditResourceController = new FindRperEditResourceController()
-const deleteRperEditResourceController = new DeleteRperEditResourceController()
-const uploadImageController = new UploadImageController()
-const getRperSectionStatusController = new GetRperSectionStatusController()
-const updateRperSectionStatusController =
-  new UpdateRperSectionStatusController()
-const createRperBackgroundController = new CreateRperBackgroundController()
-const updateRperAcknowledgmentController =
-  new UpdateRperAcknowledgmentController()
-const updateRperHistoricalMappingController =
-  new UpdateRperHistoricalMappingController()
+const rpersRouter = Router();
+const rpersController = new RpersController();
+const createRpersMembersController = new CreateRpersMembersController();
+const updateRperController = new UpdateRperSecondaryController();
+const getRperByIdController = new GetRperByIdController();
+const removeRperMemberController = new RemoveRperMemberController();
+const createRperEditResourceController = new CreateRperEditResourceController();
+const findRperEditResourceController = new FindRperEditResourceController();
+const deleteRperEditResourceController = new DeleteRperEditResourceController();
+const uploadImageController = new UploadImageController();
+const getRperSectionStatusController = new GetRperSectionStatusController();
+const updateRperSectionStatusController = new UpdateRperSectionStatusController();
+const createRperBackgroundController = new CreateRperBackgroundController();
+const updateRperAcknowledgmentController = new UpdateRperAcknowledgmentController();
+const updateRperFinalConsiderationController = new UpdateRperFinalConsiderationController();
+const updateRperHistoricalMappingController = new UpdateRperHistoricalMappingController();
 
-const upload = multer(uploadConfig)
+const upload = multer(uploadConfig);
 
 //Middleware to ensure the user is logged in before listing RPERs and Creating new one.
 rpersRouter.use(ensureAuthenticated)
@@ -107,6 +106,20 @@ rpersRouter.put(
 )
 
 rpersRouter.put(
+  '/:rper_id/finalconsideration',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperFinalConsiderationController.handle,
+);
+
+rpersRouter.put(
   '/:rper_id/historical-mapping',
   celebrate({
     [Segments.BODY]: {
@@ -118,7 +131,7 @@ rpersRouter.put(
   }),
   ensureRperMember,
   updateRperHistoricalMappingController.handle,
-)
+);
 
 rpersRouter.patch(
   '/:rper_id/members/:user_id',
