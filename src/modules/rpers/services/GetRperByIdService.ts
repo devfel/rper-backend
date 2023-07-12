@@ -32,7 +32,6 @@ export class GetRperByIdService {
         (section.status === RperStatus.COMPLETED ||
           section.status === RperStatus.NOT_APPLICABLE)
       ) {
-        console.log('entrou aqui')
         return acc + 1
       }
       return acc
