@@ -3,6 +3,7 @@ import { IRpersSecondaryDataRepository } from '../repositories/IRpersSecondaryDa
 import { IRperAcknowledgmentRepository } from '../repositories/IRperAcknowledgmentRepository';
 import { IRperFinalConsiderationRepository } from '../repositories/IRperFinalConsiderationRepository';
 import { IRperHistoricalMappingRepository } from '../repositories/IRperHistoricalMappingRepository';
+import { IRperTransectWalkRepository } from '../repositories/IRperTransectWalkRepository'
 
 import AppError from '@shared/errors/AppError';
 import { RperSection } from 'enums';
@@ -23,10 +24,12 @@ export class GetRperSectionStatusService {
      
     @inject('RperHistoricalMappingRepository')
     private readonly rperHistoricalMappingRepository: IRperHistoricalMappingRepository,
-
+     
+    @inject('RperTransectWalkRepository')
+    private readonly rperTransectWalkRepository: IRperTransectWalkRepository,
+     
     @inject('RpersFinalConsiderationRepository')
     private readonly rperFinalConsiderationRepository: IRperFinalConsiderationRepository,
-  ) { }
 
   async execute({ rper_id, section }: ExecuteParams) {
     if (section === RperSection.SECONDARY_DATA) {
@@ -63,6 +66,16 @@ export class GetRperSectionStatusService {
       const rper = await this.rperHistoricalMappingRepository.findByRperId(
         rper_id,
       )
+
+      if (!rper) {
+        throw new AppError('RPER not found', 404)
+      }
+
+      return { status: rper.status }
+    }
+
+    if (section === RperSection.TRANSECT_WALK) {
+      const rper = await this.rperTransectWalkRepository.findByRperId(rper_id)
 
       if (!rper) {
         throw new AppError('RPER not found', 404)

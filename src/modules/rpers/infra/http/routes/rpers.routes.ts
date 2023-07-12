@@ -20,6 +20,7 @@ import { CreateRperBackgroundController } from '../controllers/CreateRperBackgro
 import { UpdateRperAcknowledgmentController } from '../controllers/UpdateRperAcknowledgmentController';
 import { UpdateRperFinalConsiderationController } from '../controllers/UpdateRperFinalConsiderationController';
 import { UpdateRperHistoricalMappingController } from '../controllers/UpdateRperHistoricalMappingController';
+import { UpdateRperTransectWalkController } from '../controllers/UpdateRperTransectWalkController';
 
 const rpersRouter = Router();
 const rpersController = new RpersController();
@@ -37,6 +38,7 @@ const createRperBackgroundController = new CreateRperBackgroundController();
 const updateRperAcknowledgmentController = new UpdateRperAcknowledgmentController();
 const updateRperFinalConsiderationController = new UpdateRperFinalConsiderationController();
 const updateRperHistoricalMappingController = new UpdateRperHistoricalMappingController();
+const updateRperTransectWalkController = new UpdateRperTransectWalkController();
 
 const upload = multer(uploadConfig);
 
@@ -132,6 +134,20 @@ rpersRouter.put(
   ensureRperMember,
   updateRperHistoricalMappingController.handle,
 );
+
+rpersRouter.put(
+  '/:rper_id/transect-walk',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperTransectWalkController.handle,
+)
 
 rpersRouter.patch(
   '/:rper_id/members/:user_id',

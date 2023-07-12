@@ -16,11 +16,12 @@ import { IRpersSecondaryDataRepository } from '@modules/rpers/repositories/IRper
 import { RpersSecondaryDataRepository } from '@modules/rpers/infra/typeorm/repositories/RpersSecondaryDataRepository';
 import { IRperAcknowledgmentRepository } from '@modules/rpers/repositories/IRperAcknowledgmentRepository';
 import { RperAcknowledgmentRepository } from '@modules/rpers/infra/typeorm/repositories/RperAcknowledgmentRepository';
-import { IRperFinalConsiderationRepository } from '@modules/rpers/repositories/IRperFinalConsiderationRepository';
-import { RperFinalConsiderationRepository } from '@modules/rpers/infra/typeorm/repositories/RperFinalConsiderationRepository';
-import { IRperHistoricalMappingRepository } from '@modules/rpers/repositories/IRperHistoricalMappingRepository';
-import { RperHistoricalMappingRepository } from '@modules/rpers/infra/typeorm/repositories/RperHistoricalMappingRepository';
-
+import { IRperFinalConsiderationRepository } from '@modules/rpers/repositories/IRperFinalConsiderationRepository'
+import { RperFinalConsiderationRepository } from '@modules/rpers/infra/typeorm/repositories/RperFinalConsiderationRepository'
+import { IRperHistoricalMappingRepository } from '@modules/rpers/repositories/IRperHistoricalMappingRepository'
+import { RperHistoricalMappingRepository } from '@modules/rpers/infra/typeorm/repositories/RperHistoricalMappingRepository'
+import { IRperTransectWalkRepository } from '@modules/rpers/repositories/IRperTransectWalkRepository'
+import { RperTransectWalkRepository } from '@modules/rpers/infra/typeorm/repositories/RperTransectWalkRepository'
 
 import { IRperEditResourceRepository } from '@modules/rpers/repositories/IRperEditResourceRepository';
 import { RperEditResourceRepository } from '@modules/rpers/infra/typeorm/repositories/RperEditResourceRepository';
@@ -44,6 +45,11 @@ container.registerSingleton<IRperHistoricalMappingRepository>(
   'RperHistoricalMappingRepository',
   RperHistoricalMappingRepository,
 );
+container.registerSingleton<IRperTransectWalkRepository>(
+  'RperTransectWalkRepository',
+  RperTransectWalkRepository,
+);
+
 
 container.registerSingleton<IRperEditResourceRepository>(
   'RperEditResourceRepository',

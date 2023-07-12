@@ -15,6 +15,8 @@ import { RperSecondaryData } from './RperSecondaryData';
 import { RperAcknowledgment } from './RperAcknowledgment';
 import { RperFinalConsideration } from './RperFinalConsideration';
 import { RperHistoricalMapping } from './RperHistoricalMapping';
+import { RperTransectWalk } from './RperTransectWalk';
+
 
 @Entity('rpers')
 class Rper {
@@ -42,26 +44,22 @@ class Rper {
   })
   members: User[]
 
-  @OneToOne(() => RperSecondaryData, secondaryData => secondaryData.rper, {
-    eager: true,
-  })
+  @OneToOne(() => RperSecondaryData, secondaryData => secondaryData.rper, { eager: true })
   @JoinColumn({ name: 'rper_id' })
-  secondaryData: RperSecondaryData
+  secondaryData: RperSecondaryData;
 
-  @OneToOne(() => RperAcknowledgment, acknowledgment => acknowledgment.rper, {
-    eager: true,
-  })
+  @OneToOne(() => RperAcknowledgment, acknowledgment => acknowledgment.rper, { eager: true })
   @JoinColumn({ name: 'rper_id' })
-  acknowledgment: RperAcknowledgment
+  acknowledgment: RperAcknowledgment;
 
-  @OneToOne(
-    () => RperHistoricalMapping,
-    historicalMapping => historicalMapping.rper,
-    { eager: true },
-  )
+  @OneToOne(() => RperHistoricalMapping, historicalMapping => historicalMapping.rper, { eager: true })
   @JoinColumn({ name: 'rper_id' })
-  historicalMapping: RperHistoricalMapping
-
+  historicalMapping: RperHistoricalMapping;
+  
+  @OneToOne(() => RperTransectWalk, historicalMapping => historicalMapping.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  transectWalk: RperTransectWalk;
+  
   @OneToOne(() => RperFinalConsideration, finalconsideration => finalconsideration.rper, { eager: true })
   @JoinColumn({ name: 'rper_id' })
   finalconsideration: RperFinalConsideration;

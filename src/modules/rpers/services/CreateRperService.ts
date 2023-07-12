@@ -9,7 +9,7 @@ import { IRpersSecondaryDataRepository } from '../repositories/IRpersSecondaryDa
 import { IRperAcknowledgmentRepository } from '../repositories/IRperAcknowledgmentRepository';
 import { IRperFinalConsiderationRepository } from '../repositories/IRperFinalConsiderationRepository';
 import { IRperHistoricalMappingRepository } from '../repositories/IRperHistoricalMappingRepository';
-
+import { IRperTransectWalkRepository } from '../repositories/IRperTransectWalkRepository'
 
 interface IRequestDTO {
     name: string;
@@ -28,15 +28,19 @@ class CreateRperService {
 
         @inject('RpersAcknowledgmentRepository')
         private rperAcknowledgmentRepository: IRperAcknowledgmentRepository,
+
+        @inject('RpersFinalConsiderationRepository')
+        private rperFinalConsiderationRepository: IRperFinalConsiderationRepository,
          
         @inject('RperHistoricalMappingRepository')
         private rperHistoricalMappingRepository: IRperHistoricalMappingRepository,
 
-        @inject('RpersFinalConsiderationRepository')
-        private rperFinalConsiderationRepository: IRperFinalConsiderationRepository,
+        @inject('RperTransectWalkRepository')
+        private rperTransectWalkRepository: IRperTransectWalkRepository,
+         
     ) { }
 
-    public async execute({ name, coordinator_id }: IRequestDTO): Promise<Rper> {
+      public async execute({ name, coordinator_id }: IRequestDTO): Promise<Rper> {
         const findRperWithSameName = await this.rpersRepository.findRperByName(name);
 
         if (findRperWithSameName) {
@@ -65,17 +69,25 @@ class CreateRperService {
             rper_id: rper.rper_id,
             status: RperStatus.UNSTARTED,
         });
-      
+        
         const rperHistoricalMapping = await this.rperHistoricalMappingRepository.create({
           content: '',
           rper_id: rper.rper_id,
           status: RperStatus.UNSTARTED,
-        })
+        });
+        
+        const rperTransectWalk = await this.rperTransectWalkRepository.create({
+          content: '',
+          rper_id: rper.rper_id,
+          status: RperStatus.UNSTARTED,
+        });
 
         rper.secondaryData = rperSecondaryData;
         rper.acknowledgment = rperAcknowledgment;
         rper.finalconsideration = rperFinalConsideration;
-        rper.historicalMapping = rperHistoricalMapping
+        rper.historicalMapping = rperHistoricalMapping;
+        rper.transectWalk = rperTransectWalk;
+
 
         await this.rpersRepository.update(rper);
 

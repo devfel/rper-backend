@@ -3,6 +3,7 @@ import { IRpersSecondaryDataRepository } from '../repositories/IRpersSecondaryDa
 import { IRperAcknowledgmentRepository } from '../repositories/IRperAcknowledgmentRepository';
 import { IRperFinalConsiderationRepository } from '../repositories/IRperFinalConsiderationRepository';
 import { IRperHistoricalMappingRepository } from '../repositories/IRperHistoricalMappingRepository'
+import { IRperTransectWalkRepository } from '../repositories/IRperTransectWalkRepository'
 
 import AppError from '@shared/errors/AppError';
 import { RperSection } from 'enums';
@@ -24,10 +25,14 @@ export class UpdateRperSectionStatusService {
     private readonly rperAcknowledgmentRepository: IRperAcknowledgmentRepository,
      
     @inject('RperHistoricalMappingRepository')
-    private rperHistoricalMappingRepository: IRperHistoricalMappingRepository,
+    private readonly rperHistoricalMappingRepository: IRperHistoricalMappingRepository,
+
+    @inject('RperTransectWalkRepository')
+    private readonly rperTransectWalkRepository: IRperTransectWalkRepository,
 
     @inject('RpersFinalConsiderationRepository')
     private readonly rperFinalConsiderationRepository: IRperFinalConsiderationRepository,
+
 
     @inject('RpersRepository')
     private readonly rpersRepository: IRpersRepository,
@@ -82,6 +87,23 @@ export class UpdateRperSectionStatusService {
       await this.rpersRepository.update(rper)
     }
 
+    if (section === RperSection.TRANSECT_WALK) {
+      const transectWalk = await this.rperTransectWalkRepository.findByRperId(
+        rper_id,
+      )
+      const rper = await this.rpersRepository.findById(rper_id)
+
+      if (!transectWalk || !rper) {
+        throw new AppError('RPER not found', 404)
+      }
+
+      transectWalk.status = new_status
+      rper.updated_at = new Date()
+
+      await this.rperTransectWalkRepository.update(transectWalk)
+      await this.rpersRepository.update(rper)
+    }
+
     if (section === RperSection.FINALCONSIDERATION) {
       const finalconsideration = await this.rperFinalConsiderationRepository.findByRperId(rper_id);
       const rper = await this.rpersRepository.findById(rper_id);
@@ -96,5 +118,6 @@ export class UpdateRperSectionStatusService {
       await this.rperFinalConsiderationRepository.update(finalconsideration);
       await this.rpersRepository.update(rper);
     }
+    
   }
 }
