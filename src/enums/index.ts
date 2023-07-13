@@ -1,7 +1,7 @@
 export enum RperStatus {
   IN_PROGRESS = 'in_progress',
   COMPLETED = 'completed',
-  NOT_AVAILABLE = 'not_available',
+  NOT_APPLICABLE = 'not_applicable',
   UNSTARTED = 'unstarted',
 }
 
