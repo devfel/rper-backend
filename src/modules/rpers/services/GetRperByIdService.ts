@@ -24,6 +24,20 @@ export class GetRperByIdService {
       rper.historicalMapping,
       rper.transectWalk,
       rper.finalconsideration,
+      rper.themesframework,
+      rper.otherpreparation,
+      rper.interviews,
+      rper.presentation,
+      rper.venndiagram,
+      rper.seasonalcalendar,
+      rper.dailyroutine,
+      rper.inputandoutput,
+      rper.construction,
+      rper.focusgroup,
+      rper.realityandobjmatrix,
+      rper.prioritieselection,
+      rper.otherfieldwork,
+      rper.extrainformation,
     ]
 
     const statusCompleted = rperSections.reduce((acc, section) => {

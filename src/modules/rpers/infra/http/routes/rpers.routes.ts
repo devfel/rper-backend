@@ -21,6 +21,20 @@ import { UpdateRperAcknowledgmentController } from '../controllers/UpdateRperAck
 import { UpdateRperFinalConsiderationController } from '../controllers/UpdateRperFinalConsiderationController';
 import { UpdateRperHistoricalMappingController } from '../controllers/UpdateRperHistoricalMappingController';
 import { UpdateRperTransectWalkController } from '../controllers/UpdateRperTransectWalkController';
+import { UpdateRperConstructionController } from '../controllers/UpdateRperConstructionController';
+import { UpdateRperDailyRoutineController } from '../controllers/UpdateRperDailyRoutineController';
+import { UpdateRperExtraInformationController } from '../controllers/UpdateRperExtraInformationController';
+import { UpdateRperFocusGroupController } from '../controllers/UpdateRperFocusGroupController';
+import { UpdateRperInputAndOutputController } from '../controllers/UpdateRperInputAndOutputController';
+import { UpdateRperInterviewsController } from '../controllers/UpdateRperInterviewsController';
+import { UpdateRperOtherFieldworkController } from '../controllers/UpdateRperOtherFieldworkController';
+import { UpdateRperOtherPreparationController } from '../controllers/UpdateRperOtherPreparationController';
+import { UpdateRperPresentationController } from '../controllers/UpdateRperPresentationController';
+import { UpdateRperPrioritiesElectionController } from '../controllers/UpdateRperPrioritiesElectionController';
+import { UpdateRperRealityAndObjMatrixController } from '../controllers/UpdateRperRealityAndObjMatrixController';
+import { UpdateRperSeasonalCalendarController } from '../controllers/UpdateRperSeasonalCalendarController';
+import { UpdateRperThemesFrameworkController } from '../controllers/UpdateRperThemesFrameworkController';
+import { UpdateRperVennDiagramController } from '../controllers/UpdateRperVennDiagramController';
 
 const rpersRouter = Router();
 const rpersController = new RpersController();
@@ -39,6 +53,21 @@ const updateRperAcknowledgmentController = new UpdateRperAcknowledgmentControlle
 const updateRperFinalConsiderationController = new UpdateRperFinalConsiderationController();
 const updateRperHistoricalMappingController = new UpdateRperHistoricalMappingController();
 const updateRperTransectWalkController = new UpdateRperTransectWalkController();
+const updateRperExtraInformationController = new UpdateRperExtraInformationController();
+const updateRperOtherFieldworkController = new UpdateRperOtherFieldworkController();
+const updateRperPrioritiesElectionController = new UpdateRperPrioritiesElectionController();
+const updateRperRealityAndObjMatrixController = new UpdateRperRealityAndObjMatrixController();
+const updateRperFocusGroupController = new UpdateRperFocusGroupController();
+const updateRperConstructionController = new UpdateRperConstructionController();
+const updateRperInputAndOutputController = new UpdateRperInputAndOutputController();
+const updateRperDailyRoutineController = new UpdateRperDailyRoutineController();
+const updateRperSeasonalCalendarController = new UpdateRperSeasonalCalendarController();
+const updateRperVennDiagramController = new UpdateRperVennDiagramController();
+const updateRperPresentationController = new UpdateRperPresentationController();
+const updateRperInterviewsController = new UpdateRperInterviewsController();
+const updateRperOtherPreparationController = new UpdateRperOtherPreparationController();
+const updateRperThemesFrameworkController = new UpdateRperThemesFrameworkController();
+
 
 const upload = multer(uploadConfig);
 
@@ -147,6 +176,202 @@ rpersRouter.put(
   }),
   ensureRperMember,
   updateRperTransectWalkController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/extrainformation',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperExtraInformationController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/otherfieldwork',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperOtherFieldworkController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/prioritieselection',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperPrioritiesElectionController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/realityandobjmatrix',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperRealityAndObjMatrixController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/focusgroup',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperFocusGroupController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/construction',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperConstructionController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/inputandoutput',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperInputAndOutputController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/dailyroutine',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperDailyRoutineController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/seasonalcalendar',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperSeasonalCalendarController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/venndiagram',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperVennDiagramController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/presentation',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperPresentationController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/interviews',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperInterviewsController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/otherpreparation',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperOtherPreparationController.handle,
+)
+
+rpersRouter.put(
+  '/:rper_id/themesframework',
+  celebrate({
+    [Segments.BODY]: {
+      content: Joi.string(),
+    },
+    [Segments.PARAMS]: {
+      rper_id: Joi.string().uuid().required(),
+    },
+  }),
+  ensureRperMember,
+  updateRperThemesFrameworkController.handle,
 )
 
 rpersRouter.patch(

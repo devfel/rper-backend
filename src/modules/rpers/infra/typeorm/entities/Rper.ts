@@ -16,6 +16,20 @@ import { RperAcknowledgment } from './RperAcknowledgment';
 import { RperFinalConsideration } from './RperFinalConsideration';
 import { RperHistoricalMapping } from './RperHistoricalMapping';
 import { RperTransectWalk } from './RperTransectWalk';
+import { RperExtraInformation } from './RperExtraInformation';
+import { RperOtherFieldwork } from './RperOtherFieldwork';
+import { RperPrioritiesElection } from './RperPrioritiesElection';
+import { RperRealityAndObjMatrix } from './RperRealityAndObjMatrix';
+import { RperFocusGroup } from './RperFocusGroup';
+import { RperConstruction } from './RperConstruction';
+import { RperInputAndOutput } from './RperInputAndOutput';
+import { RperDailyRoutine } from './RperDailyRoutine';
+import { RperSeasonalCalendar } from './RperSeasonalCalendar';
+import { RperVennDiagram } from './RperVennDiagram';
+import { RperPresentation } from './RperPresentation';
+import { RperInterviews } from './RperInterviews';
+import { RperOtherPreparation } from './RperOtherPreparation';
+import { RperThemesFramework } from './RperThemesFramework';
 
 
 @Entity('rpers')
@@ -55,14 +69,70 @@ class Rper {
   @OneToOne(() => RperHistoricalMapping, historicalMapping => historicalMapping.rper, { eager: true })
   @JoinColumn({ name: 'rper_id' })
   historicalMapping: RperHistoricalMapping;
-  
+
   @OneToOne(() => RperTransectWalk, historicalMapping => historicalMapping.rper, { eager: true })
   @JoinColumn({ name: 'rper_id' })
   transectWalk: RperTransectWalk;
-  
+
   @OneToOne(() => RperFinalConsideration, finalconsideration => finalconsideration.rper, { eager: true })
   @JoinColumn({ name: 'rper_id' })
   finalconsideration: RperFinalConsideration;
+
+  @OneToOne(() => RperExtraInformation, extrainformation => extrainformation.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  extrainformation: RperExtraInformation;
+
+  @OneToOne(() => RperOtherFieldwork, otherfieldwork => otherfieldwork.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  otherfieldwork: RperOtherFieldwork;
+
+  @OneToOne(() => RperPrioritiesElection, prioritieselection => prioritieselection.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  prioritieselection: RperPrioritiesElection;
+
+  @OneToOne(() => RperRealityAndObjMatrix, realityandobjmatrix => realityandobjmatrix.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  realityandobjmatrix: RperRealityAndObjMatrix;
+
+  @OneToOne(() => RperFocusGroup, focusgroup => focusgroup.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  focusgroup: RperFocusGroup;
+
+  @OneToOne(() => RperConstruction, construction => construction.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  construction: RperConstruction;
+
+  @OneToOne(() => RperInputAndOutput, inputandoutput => inputandoutput.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  inputandoutput: RperInputAndOutput;
+
+  @OneToOne(() => RperDailyRoutine, dailyroutine => dailyroutine.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  dailyroutine: RperDailyRoutine;
+
+  @OneToOne(() => RperSeasonalCalendar, seasonalcalendar => seasonalcalendar.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  seasonalcalendar: RperSeasonalCalendar;
+
+  @OneToOne(() => RperVennDiagram, venndiagram => venndiagram.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  venndiagram: RperVennDiagram;
+
+  @OneToOne(() => RperPresentation, presentation => presentation.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  presentation: RperPresentation;
+
+  @OneToOne(() => RperInterviews, interviews => interviews.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  interviews: RperInterviews;
+
+  @OneToOne(() => RperOtherPreparation, otherpreparation => otherpreparation.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  otherpreparation: RperOtherPreparation;
+
+  @OneToOne(() => RperThemesFramework, themesframework => themesframework.rper, { eager: true })
+  @JoinColumn({ name: 'rper_id' })
+  themesframework: RperThemesFramework;
 
   @CreateDateColumn()
   created_at: Date
