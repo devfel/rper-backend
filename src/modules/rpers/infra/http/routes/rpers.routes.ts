@@ -1,75 +1,88 @@
-import { Router } from 'express';
-import { celebrate, Segments, Joi } from 'celebrate';
+import { Router } from 'express'
+import { celebrate, Segments, Joi } from 'celebrate'
 
-import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
-import RpersController from '../controllers/RpersController';
-import { CreateRpersMembersController } from '../controllers/CreateRpersMembersController';
-import { UpdateRperSecondaryController } from '../controllers/UpdateRperSecondaryController';
-import { ensureRperMember } from '../middlewares/ensureRperMember';
-import { GetRperByIdController } from '../controllers/GetRperByIdController';
-import { RemoveRperMemberController } from '../controllers/RemoveRperMemberController';
-import { CreateRperEditResourceController } from '../controllers/CreateRperEditResourceController';
-import { FindRperEditResourceController } from '../controllers/FindRperEditResourceController';
-import { DeleteRperEditResourceController } from '../controllers/DeleteRperEditResourceController';
-import uploadConfig from '@config/upload';
-import multer from 'multer';
-import { UploadImageController } from '../controllers/UploadImageController';
-import { GetRperSectionStatusController } from '../controllers/GetRperSectionStatusController';
-import { UpdateRperSectionStatusController } from '../controllers/UpdateRperSectionStatusController';
-import { CreateRperBackgroundController } from '../controllers/CreateRperBackgroundController';
-import { UpdateRperAcknowledgmentController } from '../controllers/UpdateRperAcknowledgmentController';
-import { UpdateRperFinalConsiderationController } from '../controllers/UpdateRperFinalConsiderationController';
-import { UpdateRperHistoricalMappingController } from '../controllers/UpdateRperHistoricalMappingController';
-import { UpdateRperTransectWalkController } from '../controllers/UpdateRperTransectWalkController';
-import { UpdateRperConstructionController } from '../controllers/UpdateRperConstructionController';
-import { UpdateRperDailyRoutineController } from '../controllers/UpdateRperDailyRoutineController';
-import { UpdateRperExtraInformationController } from '../controllers/UpdateRperExtraInformationController';
-import { UpdateRperFocusGroupController } from '../controllers/UpdateRperFocusGroupController';
-import { UpdateRperInputAndOutputController } from '../controllers/UpdateRperInputAndOutputController';
-import { UpdateRperInterviewsController } from '../controllers/UpdateRperInterviewsController';
-import { UpdateRperOtherFieldworkController } from '../controllers/UpdateRperOtherFieldworkController';
-import { UpdateRperOtherPreparationController } from '../controllers/UpdateRperOtherPreparationController';
-import { UpdateRperPresentationController } from '../controllers/UpdateRperPresentationController';
-import { UpdateRperPrioritiesElectionController } from '../controllers/UpdateRperPrioritiesElectionController';
-import { UpdateRperRealityAndObjMatrixController } from '../controllers/UpdateRperRealityAndObjMatrixController';
-import { UpdateRperSeasonalCalendarController } from '../controllers/UpdateRperSeasonalCalendarController';
-import { UpdateRperThemesFrameworkController } from '../controllers/UpdateRperThemesFrameworkController';
-import { UpdateRperVennDiagramController } from '../controllers/UpdateRperVennDiagramController';
+import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated'
+import RpersController from '../controllers/RpersController'
+import { CreateRpersMembersController } from '../controllers/CreateRpersMembersController'
+import { UpdateRperSecondaryController } from '../controllers/UpdateRperSecondaryController'
+import { ensureRperMember } from '../middlewares/ensureRperMember'
+import { GetRperByIdController } from '../controllers/GetRperByIdController'
+import { RemoveRperMemberController } from '../controllers/RemoveRperMemberController'
+import { CreateRperEditResourceController } from '../controllers/CreateRperEditResourceController'
+import { FindRperEditResourceController } from '../controllers/FindRperEditResourceController'
+import { DeleteRperEditResourceController } from '../controllers/DeleteRperEditResourceController'
+import uploadConfig from '@config/upload'
+import multer from 'multer'
+import { UploadImageController } from '../controllers/UploadImageController'
+import { GetRperSectionStatusController } from '../controllers/GetRperSectionStatusController'
+import { UpdateRperSectionStatusController } from '../controllers/UpdateRperSectionStatusController'
+import { CreateRperBackgroundController } from '../controllers/CreateRperBackgroundController'
+import { UpdateRperAcknowledgmentController } from '../controllers/UpdateRperAcknowledgmentController'
+import { UpdateRperFinalConsiderationController } from '../controllers/UpdateRperFinalConsiderationController'
+import { UpdateRperHistoricalMappingController } from '../controllers/UpdateRperHistoricalMappingController'
+import { UpdateRperTransectWalkController } from '../controllers/UpdateRperTransectWalkController'
+import { UpdateRperConstructionController } from '../controllers/UpdateRperConstructionController'
+import { UpdateRperDailyRoutineController } from '../controllers/UpdateRperDailyRoutineController'
+import { UpdateRperExtraInformationController } from '../controllers/UpdateRperExtraInformationController'
+import { UpdateRperFocusGroupController } from '../controllers/UpdateRperFocusGroupController'
+import { UpdateRperInputAndOutputController } from '../controllers/UpdateRperInputAndOutputController'
+import { UpdateRperInterviewsController } from '../controllers/UpdateRperInterviewsController'
+import { UpdateRperOtherFieldworkController } from '../controllers/UpdateRperOtherFieldworkController'
+import { UpdateRperOtherPreparationController } from '../controllers/UpdateRperOtherPreparationController'
+import { UpdateRperPresentationController } from '../controllers/UpdateRperPresentationController'
+import { UpdateRperPrioritiesElectionController } from '../controllers/UpdateRperPrioritiesElectionController'
+import { UpdateRperRealityAndObjMatrixController } from '../controllers/UpdateRperRealityAndObjMatrixController'
+import { UpdateRperSeasonalCalendarController } from '../controllers/UpdateRperSeasonalCalendarController'
+import { UpdateRperThemesFrameworkController } from '../controllers/UpdateRperThemesFrameworkController'
+import { UpdateRperVennDiagramController } from '../controllers/UpdateRperVennDiagramController'
+import { GenerateRperReportController } from '../controllers/GenerateRperReportController'
 
-const rpersRouter = Router();
-const rpersController = new RpersController();
-const createRpersMembersController = new CreateRpersMembersController();
-const updateRperController = new UpdateRperSecondaryController();
-const getRperByIdController = new GetRperByIdController();
-const removeRperMemberController = new RemoveRperMemberController();
-const createRperEditResourceController = new CreateRperEditResourceController();
-const findRperEditResourceController = new FindRperEditResourceController();
-const deleteRperEditResourceController = new DeleteRperEditResourceController();
-const uploadImageController = new UploadImageController();
-const getRperSectionStatusController = new GetRperSectionStatusController();
-const updateRperSectionStatusController = new UpdateRperSectionStatusController();
-const createRperBackgroundController = new CreateRperBackgroundController();
-const updateRperAcknowledgmentController = new UpdateRperAcknowledgmentController();
-const updateRperFinalConsiderationController = new UpdateRperFinalConsiderationController();
-const updateRperHistoricalMappingController = new UpdateRperHistoricalMappingController();
-const updateRperTransectWalkController = new UpdateRperTransectWalkController();
-const updateRperExtraInformationController = new UpdateRperExtraInformationController();
-const updateRperOtherFieldworkController = new UpdateRperOtherFieldworkController();
-const updateRperPrioritiesElectionController = new UpdateRperPrioritiesElectionController();
-const updateRperRealityAndObjMatrixController = new UpdateRperRealityAndObjMatrixController();
-const updateRperFocusGroupController = new UpdateRperFocusGroupController();
-const updateRperConstructionController = new UpdateRperConstructionController();
-const updateRperInputAndOutputController = new UpdateRperInputAndOutputController();
-const updateRperDailyRoutineController = new UpdateRperDailyRoutineController();
-const updateRperSeasonalCalendarController = new UpdateRperSeasonalCalendarController();
-const updateRperVennDiagramController = new UpdateRperVennDiagramController();
-const updateRperPresentationController = new UpdateRperPresentationController();
-const updateRperInterviewsController = new UpdateRperInterviewsController();
-const updateRperOtherPreparationController = new UpdateRperOtherPreparationController();
-const updateRperThemesFrameworkController = new UpdateRperThemesFrameworkController();
+const rpersRouter = Router()
+const rpersController = new RpersController()
+const createRpersMembersController = new CreateRpersMembersController()
+const updateRperController = new UpdateRperSecondaryController()
+const getRperByIdController = new GetRperByIdController()
+const removeRperMemberController = new RemoveRperMemberController()
+const createRperEditResourceController = new CreateRperEditResourceController()
+const findRperEditResourceController = new FindRperEditResourceController()
+const deleteRperEditResourceController = new DeleteRperEditResourceController()
+const uploadImageController = new UploadImageController()
+const getRperSectionStatusController = new GetRperSectionStatusController()
+const updateRperSectionStatusController =
+  new UpdateRperSectionStatusController()
+const createRperBackgroundController = new CreateRperBackgroundController()
+const updateRperAcknowledgmentController =
+  new UpdateRperAcknowledgmentController()
+const updateRperFinalConsiderationController =
+  new UpdateRperFinalConsiderationController()
+const updateRperHistoricalMappingController =
+  new UpdateRperHistoricalMappingController()
+const updateRperTransectWalkController = new UpdateRperTransectWalkController()
+const updateRperExtraInformationController =
+  new UpdateRperExtraInformationController()
+const updateRperOtherFieldworkController =
+  new UpdateRperOtherFieldworkController()
+const updateRperPrioritiesElectionController =
+  new UpdateRperPrioritiesElectionController()
+const updateRperRealityAndObjMatrixController =
+  new UpdateRperRealityAndObjMatrixController()
+const updateRperFocusGroupController = new UpdateRperFocusGroupController()
+const updateRperConstructionController = new UpdateRperConstructionController()
+const updateRperInputAndOutputController =
+  new UpdateRperInputAndOutputController()
+const updateRperDailyRoutineController = new UpdateRperDailyRoutineController()
+const updateRperSeasonalCalendarController =
+  new UpdateRperSeasonalCalendarController()
+const updateRperVennDiagramController = new UpdateRperVennDiagramController()
+const updateRperPresentationController = new UpdateRperPresentationController()
+const updateRperInterviewsController = new UpdateRperInterviewsController()
+const updateRperOtherPreparationController =
+  new UpdateRperOtherPreparationController()
+const updateRperThemesFrameworkController =
+  new UpdateRperThemesFrameworkController()
+const generateRperReportController = new GenerateRperReportController()
 
-
-const upload = multer(uploadConfig);
+const upload = multer(uploadConfig)
 
 //Middleware to ensure the user is logged in before listing RPERs and Creating new one.
 rpersRouter.use(ensureAuthenticated)
@@ -148,7 +161,7 @@ rpersRouter.put(
   }),
   ensureRperMember,
   updateRperFinalConsiderationController.handle,
-);
+)
 
 rpersRouter.put(
   '/:rper_id/historical-mapping',
@@ -162,7 +175,7 @@ rpersRouter.put(
   }),
   ensureRperMember,
   updateRperHistoricalMappingController.handle,
-);
+)
 
 rpersRouter.put(
   '/:rper_id/transect-walk',
@@ -458,5 +471,7 @@ rpersRouter.patch(
   upload.single('background'),
   createRperBackgroundController.handle,
 )
+
+rpersRouter.get('/:rper_id/report', generateRperReportController.handle)
 
 export default rpersRouter

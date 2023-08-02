@@ -1,0 +1,74 @@
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h1>RAPID PARTICIPATORY AND EMANCIPATORY RESEARCH (RPER)</h1>
+
+      <h2>MEAT SHEEP ALLIANCE OF FLORIDA {{rper_name}}</h2>
+
+      <p>JULHO 2024</p>
+    </div>
+    <div>
+      <div>
+        <div>
+          <strong>Coordenador:</strong>
+          <p>{{coordinator_name}}</p>
+        </div>
+        <div>
+          <strong>Equipe:</strong>
+          {{#each members}}
+            <p>{{name}}</p>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <div>
+      <h1>TABLE OF CONTENTS</h1>
+    </div>
+    <div>
+      <h1>INTRODUCTION</h1>
+      <p>
+        This report aims to present the results of the Rapid Participatory and
+        Emancipatory Research (RPER) named Meat Sheep Alliance of Florida
+        {{rper_name}}. The RPER is a method that consists of several techniques
+        for quick assessments to identify the main challenges faced by a
+        collectivity, discussing causes and possible solutions with the goal of
+        promoting social and economic development.
+      </p>
+    </div>
+    <section>
+      <h1>PREPARATION</h1>
+      {{#if secondaryData}}
+        <section>
+          <h2>SECONDARY DATA</h2>
+          {{secondaryData.content}}
+        </section>
+      {{/if}}
+      {{#if themesFramework}}
+        <section>
+          <h2>THEMES FRAMEWORK</h2>
+          {{themesFramework.content}}
+        </section>
+      {{/if}}
+    </section>
+    <section>
+      <h1>FIELDWORK</h1>
+      {{#if interviews}}
+        <section>
+          <h2>INTERVIEWS</h2>
+          {{interviews.content}}
+        </section>
+      {{/if}}
+      {{#if presentation}}
+        <section>
+          <h2>PRESENTATION</h2>
+          {{presentation.content}}
+        </section>
+      {{/if}}
+    </section>
+  </body>
+</html>
