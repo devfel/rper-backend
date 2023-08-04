@@ -24,6 +24,11 @@ export class GenerateRperReportService {
 
   async execute({ rper_id, type }: IGenerateRperReportDTO): Promise<any> {
     const rper = await this.rpersRepository.findById(rper_id)
+
+    if (!rper) {
+      throw new AppError('RPER not found', 404)
+    }
+
     const pathToView = path.resolve(
       __dirname,
       '..',
@@ -33,13 +38,7 @@ export class GenerateRperReportService {
       'report.hbs',
     )
 
-    console.log(__dirname)
-
     const page = readFileSync(pathToView).toString()
-
-    if (!rper) {
-      throw new AppError('RPER not found', 404)
-    }
 
     const secondaryDataFinished = this.isFinished(rper.secondaryData)
     const acknowledgmentFinished = this.isFinished(rper.acknowledgment)
@@ -63,6 +62,7 @@ export class GenerateRperReportService {
     const themesFrameworkFinished = this.isFinished(rper.themesframework)
     const transectWalkFinished = this.isFinished(rper.transectWalk)
     const vennDiagramFinished = this.isFinished(rper.venndiagram)
+    const constructionFinished = this.isFinished(rper.construction)
 
     const html = Handlebars.compile(page)
 
@@ -71,22 +71,22 @@ export class GenerateRperReportService {
       coordinator_name: rper.coordinator.name,
       members: rper.members,
       secondaryData: secondaryDataFinished ? rper.secondaryData : null,
-      acknowlegdment: acknowledgmentFinished ? rper.acknowledgment : null,
-      dailyroutine: dailyRoutineFinished ? rper.dailyroutine : null,
-      extrainformation: extraInformationFinished ? rper.extrainformation : null,
-      finalconsideration: finalConsiderationFinished
+      acknowledgment: acknowledgmentFinished ? rper.acknowledgment : null,
+      dailyRoutine: dailyRoutineFinished ? rper.dailyroutine : null,
+      extraInformation: extraInformationFinished ? rper.extrainformation : null,
+      finalConsideration: finalConsiderationFinished
         ? rper.finalconsideration
         : null,
-      focusgroup: focusGroupFinished ? rper.focusgroup : null,
+      focusGroup: focusGroupFinished ? rper.focusgroup : null,
       historicalMapping: historicalMappingFinished
         ? rper.historicalMapping
         : null,
-      inputandoutput: inputAndOutputFinished ? rper.inputandoutput : null,
+      inputAndOutput: inputAndOutputFinished ? rper.inputandoutput : null,
       interviews: interviewsFinished ? rper.interviews : null,
       otherFieldwork: otherFieldworkFinished ? rper.otherfieldwork : null,
       otherPreparation: otherPreparationFinished ? rper.otherpreparation : null,
       presentation: presentationFinished ? rper.presentation : null,
-      priorityAndSelection: priorityAndSelectionFinished
+      priorityAndElection: priorityAndSelectionFinished
         ? rper.prioritieselection
         : null,
       realityAndObjMatrix: realityAndObjMatrixFinished
@@ -96,6 +96,7 @@ export class GenerateRperReportService {
       themesFramework: themesFrameworkFinished ? rper.themesframework : null,
       transectWalk: transectWalkFinished ? rper.transectWalk : null,
       vennDiagram: vennDiagramFinished ? rper.venndiagram : null,
+      construction: constructionFinished ? rper.construction : null,
     })
   }
 }
