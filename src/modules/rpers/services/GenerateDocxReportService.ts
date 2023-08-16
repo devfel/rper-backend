@@ -3,9 +3,10 @@ import IRpersRepository from '../repositories/IRpersRepository'
 import { IGenerateRperReportDTO } from '../dtos/IGenerateRperReportDTO'
 import AppError from '@shared/errors/AppError'
 import { RperStatus } from 'enums'
-import { Document, Packer, Paragraph } from 'docx'
-import { writeFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import path from 'path'
+import Handlebars from 'handlebars'
+import HtmlToDocX from 'html-to-docx'
 
 @injectable()
 export class GenerateDocxReportService {
@@ -18,7 +19,7 @@ export class GenerateDocxReportService {
     return (
       section.status &&
       (section.status === RperStatus.COMPLETED ||
-        section.status === RperStatus.COMPLETED)
+        section.status === RperStatus.IN_PROGRESS)
     )
   }
 
@@ -53,28 +54,61 @@ export class GenerateDocxReportService {
     const vennDiagramFinished = this.isFinished(rper.venndiagram)
     const constructionFinished = this.isFinished(rper.construction)
 
-    const document = new Document({
-      creator: user_name,
-      description: '',
-      title: `${rper.name}`,
-      sections: [
-        {
-          children: [
-            new Paragraph({
-              text: 'Hello World',
-            }),
-          ],
-        },
-      ],
+    // const outputPath = path.resolve(__dirname, '..', '..', '..', '..', 'tmp')
+
+    const pathToView = path.resolve(
+      __dirname,
+      '..',
+      '..',
+      '..',
+      'views',
+      'report.hbs',
+    )
+
+    const page = readFileSync(pathToView).toString()
+
+    const html = Handlebars.compile(page)
+    const reportPage = html({
+      rper_name: rper.name,
+      coordinator_name: rper.coordinator.name,
+      members: rper.members,
+      secondaryData: secondaryDataFinished ? rper.secondaryData : null,
+      acknowledgment: acknowledgmentFinished ? rper.acknowledgment : null,
+      dailyRoutine: dailyRoutineFinished ? rper.dailyroutine : null,
+      extraInformation: extraInformationFinished ? rper.extrainformation : null,
+      finalConsideration: finalConsiderationFinished
+        ? rper.finalconsideration
+        : null,
+      focusGroup: focusGroupFinished ? rper.focusgroup : null,
+      historicalMapping: historicalMappingFinished
+        ? rper.historicalMapping
+        : null,
+      inputAndOutput: inputAndOutputFinished ? rper.inputandoutput : null,
+      interviews: interviewsFinished ? rper.interviews : null,
+      otherFieldwork: otherFieldworkFinished ? rper.otherfieldwork : null,
+      otherPreparation: otherPreparationFinished ? rper.otherpreparation : null,
+      presentation: presentationFinished ? rper.presentation : null,
+      priorityAndElection: priorityAndSelectionFinished
+        ? rper.prioritieselection
+        : null,
+      realityAndObjMatrix: realityAndObjMatrixFinished
+        ? rper.realityandobjmatrix
+        : null,
+      seasonalCalendar: seasonalCalendarFinished ? rper.seasonalcalendar : null,
+      themesFramework: themesFrameworkFinished ? rper.themesframework : null,
+      transectWalk: transectWalkFinished ? rper.transectWalk : null,
+      vennDiagram: vennDiagramFinished ? rper.venndiagram : null,
+      construction: constructionFinished ? rper.construction : null,
     })
 
+    const docxBuffer = await HtmlToDocX(reportPage, null)
     const outputPath = path.resolve(__dirname, '..', '..', '..', '..', 'tmp')
 
-    Packer.toBuffer(document).then(buffer => {
-      writeFileSync(
-        `${outputPath}/${rper.name}-${new Date().getTime()}.docx`,
-        buffer,
-      )
-    })
+    writeFileSync(
+      `${outputPath}/${rper.name}-${new Date().getTime()}.docx`,
+      docxBuffer,
+    )
+
+    return reportPage
   }
 }

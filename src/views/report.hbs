@@ -1,0 +1,161 @@
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h1>RAPID PARTICIPATORY AND EMANCIPATORY RESEARCH (RPER)</h1>
+
+      <h2>{{rper_name}}</h2>
+
+      <p>JULHO 2024</p>
+    </div>
+    <div>
+      <div>
+        <div>
+          <strong>Coordenador:</strong>
+          <p>{{coordinator_name}}</p>
+        </div>
+        <div>
+          <strong>Equipe:</strong>
+          {{#each members}}
+            <p>{{name}}</p>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <div>
+      <h1>TABLE OF CONTENTS</h1>
+    </div>
+    <div>
+      <h1>INTRODUCTION</h1>
+      <p>
+        This report aims to present the results of the Rapid Participatory and
+        Emancipatory Research (RPER) named Meat Sheep Alliance of Florida
+        {{rper_name}}. The RPER is a method that consists of several techniques
+        for quick assessments to identify the main challenges faced by a
+        collectivity, discussing causes and possible solutions with the goal of
+        promoting social and economic development.
+      </p>
+    </div>
+    <section>
+      <h1>PREPARATION</h1>
+      {{#if secondaryData}}
+        <section>
+          <h2>SECONDARY DATA</h2>
+          {{{secondaryData.content}}}
+        </section>
+      {{/if}}
+      {{#if themesFramework}}
+        <section>
+          <h2>THEMES FRAMEWORK</h2>
+          {{{themesFramework.content}}}
+        </section>
+      {{/if}}
+    </section>
+    <section>
+      <h1>FIELDWORK</h1>
+      {{#if interviews}}
+        <section>
+          <h2>INTERVIEWS</h2>
+          {{{interviews.content}}}
+        </section>
+      {{/if}}
+      {{#if presentation}}
+        <section>
+          <h2>PRESENTATION</h2>
+          {{{presentation.content}}}
+        </section>
+      {{/if}}
+      {{#if historicalMapping}}
+        <section>
+          <h2>HISTORICAL MAPPING</h2>
+          {{{historicalMapping.content}}}
+        </section>
+      {{/if}}
+      {{#if transectWalk}}
+        <section>
+          <h2>TRANSECT WALK</h2>
+          {{{transectWalk.content}}}
+        </section>
+      {{/if}}
+      {{#if vennDiagram}}
+        <section>
+          <h2>VENN DIAGRAM</h2>
+          {{{vennDiagram.content}}}
+        </section>
+      {{/if}}
+      {{#if seasonalCalendar}}
+        <section>
+          <h2>SEASONAL CALENDAR</h2>
+          {{{seasonalCalendar.content}}}
+        </section>
+      {{/if}}
+      {{#if dailyRoutine}}
+        <section>
+          <h2>DAILY ROUTINE</h2>
+          {{{dailyRoutine.content}}}
+        </section>
+      {{/if}}
+      {{#if inputAndOutput}}
+        <section>
+          <h2>INPUT AND OUTPUT</h2>
+          {{{inputAndOutput.content}}}
+        </section>
+      {{/if}}
+      {{#if construction}}
+        <section>
+          <h2>CONSTRUCTION</h2>
+          {{{construction.content}}}
+        </section>
+      {{/if}}
+      {{#if focusGroup}}
+        <section>
+          <h2>FOCUS GROUP</h2>
+          {{{focusGroup.content}}}
+        </section>
+      {{/if}}
+      {{#if realityAndObjMatrix}}
+        <section>
+          <h2>REALITY AND OBJ. MATRIX</h2>
+          {{{realityAndObjMatrix.content}}}
+        </section>
+      {{/if}}
+      {{#if priorityAndElection}}
+        <section>
+          <h2>PRIORITIES ELECTION</h2>
+          {{{priorityAndElection.content}}}
+        </section>
+      {{/if}}
+      {{#if otherFieldwork}}
+        <section>
+          <h2>OTHER FIELDWORK</h2>
+          {{{otherFieldwork.content}}}
+        </section>
+      {{/if}}
+    </section>
+    <section>
+      <h1>FINALIZATION</h1>
+      {{#if extraInformation}}
+        <section>
+          <h2>EXTRA INFORMATION</h2>
+          {{{extraInformation.content}}}
+        </section>
+      {{/if}}
+      {{#if finalConsideration}}
+        <section>
+          <h2>FINAL CONSIDERATIONS</h2>
+          {{{finalConsideration.content}}}
+        </section>
+      {{/if}}
+      {{#if acknowledgment}}
+        <section>
+          <h2>ACKNOWLEDGMENT</h2>
+          {{{acknowledgment.content}}}
+        </section>
+      {{/if}}
+    </section>
+  </body>
+</html>
