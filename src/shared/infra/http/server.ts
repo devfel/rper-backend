@@ -13,7 +13,6 @@ import AppError from '@shared/errors/AppError'
 import uploadConfig from '@config/upload'
 import '@shared/infra/typeorm'
 import '@shared/container'
-import { engine } from 'express-handlebars'
 
 //dotenv.config();
 const app = express()
@@ -67,9 +66,6 @@ app.use(
     }
   },
 )
-
-app.engine('handlebars', engine({ extname: '.hbs' }))
-app.set('view engine', 'handlebars')
 
 app.listen(process.env.PORT, () => {
   console.log(`Server started on port ${process.env.PORT}!`)

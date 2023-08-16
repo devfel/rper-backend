@@ -2,13 +2,13 @@ import { inject, injectable } from 'tsyringe'
 import IRpersRepository from '../repositories/IRpersRepository'
 import { IGenerateRperReportDTO } from '../dtos/IGenerateRperReportDTO'
 import AppError from '@shared/errors/AppError'
-import Handlebars from 'handlebars'
-import { readFileSync } from 'fs'
-import path from 'path'
 import { RperStatus } from 'enums'
+import { Document, Packer, Paragraph } from 'docx'
+import { writeFileSync } from 'fs'
+import path from 'path'
 
 @injectable()
-export class GenerateRperReportService {
+export class GenerateDocxReportService {
   constructor(
     @inject('RpersRepository')
     private readonly rpersRepository: IRpersRepository,
@@ -22,23 +22,12 @@ export class GenerateRperReportService {
     )
   }
 
-  async execute({ rper_id, type }: IGenerateRperReportDTO): Promise<any> {
+  async execute({ rper_id, user_name }: IGenerateRperReportDTO): Promise<any> {
     const rper = await this.rpersRepository.findById(rper_id)
 
     if (!rper) {
       throw new AppError('RPER not found', 404)
     }
-
-    const pathToView = path.resolve(
-      __dirname,
-      '..',
-      '..',
-      '..',
-      'views',
-      'report.hbs',
-    )
-
-    const page = readFileSync(pathToView).toString()
 
     const secondaryDataFinished = this.isFinished(rper.secondaryData)
     const acknowledgmentFinished = this.isFinished(rper.acknowledgment)
@@ -64,39 +53,28 @@ export class GenerateRperReportService {
     const vennDiagramFinished = this.isFinished(rper.venndiagram)
     const constructionFinished = this.isFinished(rper.construction)
 
-    const html = Handlebars.compile(page)
+    const document = new Document({
+      creator: user_name,
+      description: '',
+      title: `${rper.name}`,
+      sections: [
+        {
+          children: [
+            new Paragraph({
+              text: 'Hello World',
+            }),
+          ],
+        },
+      ],
+    })
 
-    return html({
-      rper_name: rper.name,
-      coordinator_name: rper.coordinator.name,
-      members: rper.members,
-      secondaryData: secondaryDataFinished ? rper.secondaryData : null,
-      acknowledgment: acknowledgmentFinished ? rper.acknowledgment : null,
-      dailyRoutine: dailyRoutineFinished ? rper.dailyroutine : null,
-      extraInformation: extraInformationFinished ? rper.extrainformation : null,
-      finalConsideration: finalConsiderationFinished
-        ? rper.finalconsideration
-        : null,
-      focusGroup: focusGroupFinished ? rper.focusgroup : null,
-      historicalMapping: historicalMappingFinished
-        ? rper.historicalMapping
-        : null,
-      inputAndOutput: inputAndOutputFinished ? rper.inputandoutput : null,
-      interviews: interviewsFinished ? rper.interviews : null,
-      otherFieldwork: otherFieldworkFinished ? rper.otherfieldwork : null,
-      otherPreparation: otherPreparationFinished ? rper.otherpreparation : null,
-      presentation: presentationFinished ? rper.presentation : null,
-      priorityAndElection: priorityAndSelectionFinished
-        ? rper.prioritieselection
-        : null,
-      realityAndObjMatrix: realityAndObjMatrixFinished
-        ? rper.realityandobjmatrix
-        : null,
-      seasonalCalendar: seasonalCalendarFinished ? rper.seasonalcalendar : null,
-      themesFramework: themesFrameworkFinished ? rper.themesframework : null,
-      transectWalk: transectWalkFinished ? rper.transectWalk : null,
-      vennDiagram: vennDiagramFinished ? rper.venndiagram : null,
-      construction: constructionFinished ? rper.construction : null,
+    const outputPath = path.resolve(__dirname, '..', '..', '..', '..', 'tmp')
+
+    Packer.toBuffer(document).then(buffer => {
+      writeFileSync(
+        `${outputPath}/${rper.name}-${new Date().getTime()}.docx`,
+        buffer,
+      )
     })
   }
 }

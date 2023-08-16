@@ -35,7 +35,7 @@ import { UpdateRperRealityAndObjMatrixController } from '../controllers/UpdateRp
 import { UpdateRperSeasonalCalendarController } from '../controllers/UpdateRperSeasonalCalendarController'
 import { UpdateRperThemesFrameworkController } from '../controllers/UpdateRperThemesFrameworkController'
 import { UpdateRperVennDiagramController } from '../controllers/UpdateRperVennDiagramController'
-import { GenerateRperReportController } from '../controllers/GenerateRperReportController'
+import { GenerateDocxReportController } from '../controllers/GenerateDocxReportController'
 
 const rpersRouter = Router()
 const rpersController = new RpersController()
@@ -80,7 +80,7 @@ const updateRperOtherPreparationController =
   new UpdateRperOtherPreparationController()
 const updateRperThemesFrameworkController =
   new UpdateRperThemesFrameworkController()
-const generateRperReportController = new GenerateRperReportController()
+const generateRperReportController = new GenerateDocxReportController()
 
 const upload = multer(uploadConfig)
 
