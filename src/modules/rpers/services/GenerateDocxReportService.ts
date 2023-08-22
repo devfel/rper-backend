@@ -7,6 +7,7 @@ import { readFileSync, writeFileSync } from 'fs'
 import path from 'path'
 import Handlebars from 'handlebars'
 import HtmlToDocX from 'html-to-docx'
+import { getActualDate } from '../utils/formatDate'
 
 @injectable()
 export class GenerateDocxReportService {
@@ -66,11 +67,13 @@ export class GenerateDocxReportService {
     )
 
     const page = readFileSync(pathToView).toString()
+    const actualDate = getActualDate()
 
     const html = Handlebars.compile(page)
     const reportPage = html({
       rper_name: rper.name,
       coordinator_name: rper.coordinator.name,
+      actualDate,
       members: rper.members,
       secondaryData: secondaryDataFinished ? rper.secondaryData : null,
       acknowledgment: acknowledgmentFinished ? rper.acknowledgment : null,
