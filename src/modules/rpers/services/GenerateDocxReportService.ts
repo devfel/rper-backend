@@ -119,11 +119,10 @@ export class GenerateDocxReportService {
     const docxBuffer = await HtmlToDocX(reportPage, null)
     const outputPath = path.resolve(__dirname, '..', '..', '..', '..', 'tmp')
 
-    writeFileSync(
-      `${outputPath}/${rper.name}-${new Date().getTime()}.docx`,
-      docxBuffer,
-    )
+    const filename = `${outputPath}/${rper.name}-${new Date().getTime()}.docx`
 
-    return reportPage
+    writeFileSync(filename, docxBuffer)
+
+    return filename
   }
 }
