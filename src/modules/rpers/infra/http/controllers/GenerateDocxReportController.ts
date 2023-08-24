@@ -15,6 +15,6 @@ export class GenerateDocxReportController {
       user_name: request.user.name,
     })
 
-    response.send(result)
+    return response.download(result)
   }
 }
