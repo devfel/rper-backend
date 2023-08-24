@@ -9,12 +9,24 @@ import Handlebars from 'handlebars'
 import HtmlToDocX from 'html-to-docx'
 import { getActualDate } from '../utils/formatDate'
 
+
+
 @injectable()
 export class GenerateDocxReportService {
   constructor(
     @inject('RpersRepository')
     private readonly rpersRepository: IRpersRepository,
-  ) {}
+  ) {
+    Handlebars.registerHelper('simplifyContent', this.simplifyContent.bind(this));
+  }
+
+  private simplifyContent(htmlString: string): string {
+    let imgRegexReplacer = /<div class="se-component se-image-container[^>]+><figure[^>]*><img[^>]+src="([^"]+)"[^>]*><\/figure><\/div>/g;
+
+    return htmlString.replace(imgRegexReplacer, (match, srcValue) => {
+      return `<img src="${srcValue}" />`;
+    });
+  }
 
   private isFinished(section: any) {
     return (

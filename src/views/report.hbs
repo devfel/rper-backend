@@ -1,169 +1,170 @@
 <html lang='en'>
-  <head>
-    <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <title>Document</title>
-  </head>
-  <body>
-    <section>
-      <h1 style='font-size: 32px; text-align: center;'>RAPID PARTICIPATORY AND
-        EMANCIPATORY RESEARCH (RPER)</h1>
-      <br /><br /><br /><br /><br />
 
-      <h2 style='font-size: 28px; text-align: center;'>{{rper_name}}</h2>
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>Document</title>
+</head>
 
-      <br /><br /><br /><br /><br />
+<body>
+  <section>
+    <h1 style='font-size: 32px; text-align: center;'>RAPID PARTICIPATORY AND
+      EMANCIPATORY RESEARCH (RPER)</h1>
+    <br /><br /><br /><br /><br />
 
-      <p style='text-align: center;'>{{actualDate}}</p>
-      <div class='page-break'></div>
-    </section>
-    <section>
-      <br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br />
-      <div>
-        <strong style='text-align: right; font-size: 24px'>Coordenador:</strong>
-        <p style='text-align: right;'>{{coordinator_name}}</p>
-      </div>
-      <div>
-        <strong
-          style='text-align: right; font-size: 24px; margin-top: 24px'
-        >Equipe:</strong>
-        {{#each members}}
-          <p style='text-align: right; margin-bottom: 8px'>{{name}}</p>
-        {{/each}}
-      </div>
-      <div class='page-break'></div>
-    </section>
-    <section>
-      <h1>TABLE OF CONTENTS</h1>
-    </section>
+    <h2 style='font-size: 28px; text-align: center;'>{{rper_name}}</h2>
+
+    <br /><br /><br /><br /><br />
+
+    <p style='text-align: center;'>{{actualDate}}</p>
+    <div class='page-break'></div>
+  </section>
+  <section>
+    <br /><br /><br /><br /><br />
+    <br /><br /><br /><br /><br />
     <div>
-      <h2>INTRODUCTION</h2>
-      <p>
-        This report aims to present the results of the Rapid Participatory and
-        Emancipatory Research (RPER) named Meat Sheep Alliance of Florida
-        {{rper_name}}. The RPER is a method that consists of several techniques
-        for quick assessments to identify the main challenges faced by a
-        collectivity, discussing causes and possible solutions with the goal of
-        promoting social and economic development.
-      </p>
+      <strong style='text-align: right; font-size: 24px'>Coordenador:</strong>
+      <p style='text-align: right;'>{{coordinator_name}}</p>
     </div>
+    <div>
+      <strong style='text-align: right; font-size: 24px; margin-top: 24px'>Equipe:</strong>
+      {{#each members}}
+      <p style='text-align: right; margin-bottom: 8px'>{{name}}</p>
+      {{/each}}
+    </div>
+    <div class='page-break'></div>
+  </section>
+  <section>
+    <h1>TABLE OF CONTENTS</h1>
+  </section>
+  <div>
+    <h2>INTRODUCTION</h2>
+    <p>
+      This report aims to present the results of the Rapid Participatory and
+      Emancipatory Research (RPER) named Meat Sheep Alliance of Florida
+      {{rper_name}}. The RPER is a method that consists of several techniques
+      for quick assessments to identify the main challenges faced by a
+      collectivity, discussing causes and possible solutions with the goal of
+      promoting social and economic development.
+    </p>
+  </div>
+  <section>
+    <h3>PREPARATION</h3>
+    {{#if secondaryData}}
     <section>
-      <h3>PREPARATION</h3>
-      {{#if secondaryData}}
-        <section>
-          <h4>SECONDARY DATA</h4>
-          {{{secondaryData.content}}}
-        </section>
-      {{/if}}
-      {{#if themesFramework}}
-        <section>
-          <h4>THEMES FRAMEWORK</h4>
-          {{{themesFramework.content}}}
-        </section>
-      {{/if}}
+      <h4>SECONDARY DATA</h4>
+      {{{simplifyContent secondaryData.content}}}
     </section>
+    {{/if}}
+    {{#if themesFramework}}
     <section>
-      <h3>FIELDWORK</h3>
-      {{#if interviews}}
-        <section>
-          <h4>INTERVIEWS</h4>
-          {{{interviews.content}}}
-        </section>
-      {{/if}}
-      {{#if presentation}}
-        <section>
-          <h4>PRESENTATION</h4>
-          {{{presentation.content}}}
-        </section>
-      {{/if}}
-      {{#if historicalMapping}}
-        <section>
-          <h4>HISTORICAL MAPPING</h4>
-          {{{historicalMapping.content}}}
-        </section>
-      {{/if}}
-      {{#if transectWalk}}
-        <section>
-          <h4>TRANSECT WALK</h4>
-          {{{transectWalk.content}}}
-        </section>
-      {{/if}}
-      {{#if vennDiagram}}
-        <section>
-          <h4>VENN DIAGRAM</h4>
-          {{{vennDiagram.content}}}
-        </section>
-      {{/if}}
-      {{#if seasonalCalendar}}
-        <section>
-          <h4>SEASONAL CALENDAR</h4>
-          {{{seasonalCalendar.content}}}
-        </section>
-      {{/if}}
-      {{#if dailyRoutine}}
-        <section>
-          <h4>DAILY ROUTINE</h4>
-          {{{dailyRoutine.content}}}
-        </section>
-      {{/if}}
-      {{#if inputAndOutput}}
-        <section>
-          <h4>INPUT AND OUTPUT</h4>
-          {{{inputAndOutput.content}}}
-        </section>
-      {{/if}}
-      {{#if construction}}
-        <section>
-          <h4>CONSTRUCTION</h4>
-          {{{construction.content}}}
-        </section>
-      {{/if}}
-      {{#if focusGroup}}
-        <section>
-          <h4>FOCUS GROUP</h4>
-          {{{focusGroup.content}}}
-        </section>
-      {{/if}}
-      {{#if realityAndObjMatrix}}
-        <section>
-          <h4>REALITY AND OBJ. MATRIX</h4>
-          {{{realityAndObjMatrix.content}}}
-        </section>
-      {{/if}}
-      {{#if priorityAndElection}}
-        <section>
-          <h4>PRIORITIES ELECTION</h4>
-          {{{priorityAndElection.content}}}
-        </section>
-      {{/if}}
-      {{#if otherFieldwork}}
-        <section>
-          <h4>OTHER FIELDWORK</h4>
-          {{{otherFieldwork.content}}}
-        </section>
-      {{/if}}
+      <h4>THEMES FRAMEWORK</h4>
+      {{{simplifyContent themesFramework.content}}}
     </section>
+    {{/if}}
+  </section>
+  <section>
+    <h3>FIELDWORK</h3>
+    {{#if interviews}}
     <section>
-      <h3>FINALIZATION</h3>
-      {{#if extraInformation}}
-        <section>
-          <h4>EXTRA INFORMATION</h4>
-          {{{extraInformation.content}}}
-        </section>
-      {{/if}}
-      {{#if finalConsideration}}
-        <section>
-          <h4>FINAL CONSIDERATIONS</h4>
-          {{{finalConsideration.content}}}
-        </section>
-      {{/if}}
-      {{#if acknowledgment}}
-        <section>
-          <h4>ACKNOWLEDGMENT</h4>
-          {{{acknowledgment.content}}}
-        </section>
-      {{/if}}
+      <h4>INTERVIEWS</h4>
+      {{{simplifyContent interviews.content}}}
     </section>
-  </body>
+    {{/if}}
+    {{#if presentation}}
+    <section>
+      <h4>PRESENTATION</h4>
+      {{{simplifyContent presentation.content}}}
+    </section>
+    {{/if}}
+    {{#if historicalMapping}}
+    <section>
+      <h4>HISTORICAL MAPPING</h4>
+      {{{simplifyContent historicalMapping.content}}}
+    </section>
+    {{/if}}
+    {{#if transectWalk}}
+    <section>
+      <h4>TRANSECT WALK</h4>
+      {{{simplifyContent transectWalk.content}}}
+    </section>
+    {{/if}}
+    {{#if vennDiagram}}
+    <section>
+      <h4>VENN DIAGRAM</h4>
+      {{{simplifyContent vennDiagram.content}}}
+    </section>
+    {{/if}}
+    {{#if seasonalCalendar}}
+    <section>
+      <h4>SEASONAL CALENDAR</h4>
+      {{{simplifyContent seasonalCalendar.content}}}
+    </section>
+    {{/if}}
+    {{#if dailyRoutine}}
+    <section>
+      <h4>DAILY ROUTINE</h4>
+      {{{simplifyContent dailyRoutine.content}}}
+    </section>
+    {{/if}}
+    {{#if inputAndOutput}}
+    <section>
+      <h4>INPUT AND OUTPUT</h4>
+      {{{simplifyContent inputAndOutput.content}}}
+    </section>
+    {{/if}}
+    {{#if construction}}
+    <section>
+      <h4>CONSTRUCTION</h4>
+      {{{csimplifyContent onstruction.content}}}
+    </section>
+    {{/if}}
+    {{#if focusGroup}}
+    <section>
+      <h4>FOCUS GROUP</h4>
+      {{{simplifyContent focusGroup.content}}}
+    </section>
+    {{/if}}
+    {{#if realityAndObjMatrix}}
+    <section>
+      <h4>REALITY AND OBJ. MATRIX</h4>
+      {{{simplifyContent realityAndObjMatrix.content}}}
+    </section>
+    {{/if}}
+    {{#if priorityAndElection}}
+    <section>
+      <h4>PRIORITIES ELECTION</h4>
+      {{{simplifyContent priorityAndElection.content}}}
+    </section>
+    {{/if}}
+    {{#if otherFieldwork}}
+    <section>
+      <h4>OTHER FIELDWORK</h4>
+      {{{simplifyContent otherFieldwork.content}}}
+    </section>
+    {{/if}}
+  </section>
+  <section>
+    <h3>FINALIZATION</h3>
+    {{#if extraInformation}}
+    <section>
+      <h4>EXTRA INFORMATION</h4>
+      {{{simplifyContent extraInformation.content}}}
+    </section>
+    {{/if}}
+    {{#if finalConsideration}}
+    <section>
+      <h4>FINAL CONSIDERATIONS</h4>
+      {{{simplifyContent finalConsideration.content}}}
+    </section>
+    {{/if}}
+    {{#if acknowledgment}}
+    <section>
+      <h4>ACKNOWLEDGMENT</h4>
+      {{{simplifyContent acknowledgment.content}}}
+    </section>
+    {{/if}}
+  </section>
+</body>
+
 </html>
