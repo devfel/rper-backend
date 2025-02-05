@@ -20,6 +20,9 @@ COPY . .
 COPY wait-for-it.sh ./wait-for-it.sh
 RUN chmod +x ./wait-for-it.sh
 
+# Step 7.5: set the memory to 4 gigas
+ENV NODE_OPTIONS=--max-old-space-size=4096
+
 # Step 8: Build the TypeScript code
 RUN npm run build
 
