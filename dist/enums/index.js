@@ -1,0 +1,32 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RperSection = exports.RperStatus = void 0;
+var RperStatus;
+(function (RperStatus) {
+    RperStatus["IN_PROGRESS"] = "in_progress";
+    RperStatus["COMPLETED"] = "completed";
+    RperStatus["NOT_APPLICABLE"] = "not_applicable";
+    RperStatus["UNSTARTED"] = "unstarted";
+})(RperStatus = exports.RperStatus || (exports.RperStatus = {}));
+var RperSection;
+(function (RperSection) {
+    RperSection["SECONDARY_DATA"] = "secondary-data";
+    RperSection["ACKNOWLEDGMENT"] = "acknowledgment";
+    RperSection["HISTORICAL_MAPPING"] = "historical-mapping";
+    RperSection["TRANSECT_WALK"] = "transect-walk";
+    RperSection["FINALCONSIDERATION"] = "finalconsideration";
+    RperSection["THEMESFRAMEWORK"] = "themesframework";
+    RperSection["OTHERPREPARATION"] = "otherpreparation";
+    RperSection["INTERVIEWS"] = "interviews";
+    RperSection["PRESENTATION"] = "presentation";
+    RperSection["VENNDIAGRAM"] = "venndiagram";
+    RperSection["SEASONALCALENDAR"] = "seasonalcalendar";
+    RperSection["DAILYROUTINE"] = "dailyroutine";
+    RperSection["INPUTANDOUTPUT"] = "inputandoutput";
+    RperSection["CONSTRUCTION"] = "construction";
+    RperSection["FOCUSGROUP"] = "focusgroup";
+    RperSection["REALITYANDOBJMATRIX"] = "realityandobjmatrix";
+    RperSection["PRIORITIESELECTION"] = "prioritieselection";
+    RperSection["OTHERFIELDWORK"] = "otherfieldwork";
+    RperSection["EXTRAINFORMATION"] = "extrainformation";
+})(RperSection = exports.RperSection || (exports.RperSection = {}));

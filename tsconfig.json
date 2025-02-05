@@ -8,21 +8,31 @@
     "baseUrl": "./src",
     "allowJs": true,
     "paths": {
-      "@modules/*": [
-        "modules/*"
-      ],
-      "@config/*": [
-        "config/*"
-      ],
-      "@shared/*": [
-        "shared/*"
-      ]
+      "@modules/*": ["modules/*"],
+      "@config/*": ["config/*"],
+      "@shared/*": ["shared/*"]
     },
     "outDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "strictPropertyInitialization": false,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "plugins": [
+      {
+        "transform": "ts-transform-paths"
+      }
+    ]
+  },
+  "include": ["src/**/*.ts", "src/views/**/*"],
+  "exclude": [
+    "node_modules",
+    "coverage",
+    "jest.config.js",
+    "ormconfig.js",
+    "**/*.test.ts",
+    "**/__tests__/*",
+    "**/*.spec.ts",
+    "dist"
+  ]
 }

@@ -1,6 +1,6 @@
 import { container } from 'tsyringe'
 import { Request, Response } from 'express'
-import { UpdateRperTransectWalkService } from '@modules/rpers/services/UpdateRperTransectWalkService.ts'
+import { UpdateRperTransectWalkService } from '@modules/rpers/services/UpdateRperTransectWalkService'
 
 export class UpdateRperTransectWalkController {
   async handle(request: Request, response: Response): Promise<Response> {

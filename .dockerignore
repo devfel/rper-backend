@@ -1,0 +1,8 @@
+node_modules
+coverage
+dist
+*.test.ts
+jest.config.js
+ormconfig.js
+Dockerfile
+docker-compose.yml

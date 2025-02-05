@@ -8,8 +8,7 @@ import path from 'path'
 import Handlebars from 'handlebars'
 import HtmlToDocX from 'html-to-docx'
 import { getActualDate } from '../utils/formatDate'
-
-
+import { existsSync } from 'fs'
 
 @injectable()
 export class GenerateDocxReportService {
@@ -17,15 +16,30 @@ export class GenerateDocxReportService {
     @inject('RpersRepository')
     private readonly rpersRepository: IRpersRepository,
   ) {
-    Handlebars.registerHelper('simplifyContent', this.simplifyContent.bind(this));
+    Handlebars.registerHelper(
+      'simplifyContent',
+      this.simplifyContent.bind(this),
+    )
   }
 
   private simplifyContent(htmlString: string): string {
-    let imgRegexReplacer = /<div class="se-component se-image-container[^>]+><figure[^>]*><img[^>]+src="([^"]+)"[^>]*><\/figure><\/div>/g;
+    const imgRegexReplacer =
+      /<div class="se-component se-image-container[^>]+><figure[^>]*><img[^>]+src="([^"]+)"[^>]*><\/figure><\/div>/g
 
     return htmlString.replace(imgRegexReplacer, (match, srcValue) => {
-      return `<img src="${srcValue}" />`;
-    });
+      if (!srcValue) {
+        return ''
+      }
+
+      const filePath = srcValue.replace('http://localhost:3333/files/', '')
+      const absolutePath = path.resolve('/app/tmp/uploads', filePath)
+
+      if (!existsSync(absolutePath)) {
+        return '' // Skip this <img> tag if the file doesn't exist
+      }
+
+      return `<img src="${srcValue}" />` // Include the valid <img> tag
+    })
   }
 
   private isFinished(section: any) {

@@ -1,20 +1,20 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add html-to-docx
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add tsconfig-paths
 
 PATH: 
-  C:\Users\LFVAR\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\LFVAR\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Python310\Scripts;C:\Python310;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin;C:\Program Files\Git\cmd;C:\Program Files\Git\usr\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Docker\Docker\resources\bin;C:\Users\LFVAR\AppData\Local\Programs\Python\Python311\Scripts;C:\Users\LFVAR\AppData\Local\Programs\Python\Python311;C:\Users\LFVAR\AppData\Local\Microsoft\WindowsApps;C:\Users\LFVAR\AppData\Roaming\npm;C:\Users\LFVAR\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\LFVAR\AppData\Local\Yarn\bin;C:\Program Files\heroku\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  C:\Users\LFVAR\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\LFVAR\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin;C:\Program Files\Git\cmd;C:\Program Files\Git\usr\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\nodejs;C:\Program Files\dotnet;C:\Program Files\Docker\Docker\resources\bin;C:\Users\LFVAR\AppData\Local\Microsoft\WindowsApps;C:\Users\LFVAR\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\LFVAR\AppData\Local\Yarn\bin;C:\Program Files\heroku\bin;C:\Users\LFVAR\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
   1.22.15
 
 Node version: 
-  16.13.0
+  20.14.0
 
 Platform: 
   win32 x64
 
 Trace: 
-  SyntaxError: Invalid value type 2687:0 in C:\Users\LFVAR\Desktop\Coding-UF\rper-backend\yarn.lock
+  SyntaxError: Invalid value type 2683:0 in C:\Users\LFVAR\Desktop\Coding-UF\rper-backend\yarn.lock
       at Parser.unexpected (C:\Program Files (x86)\Yarn\lib\cli.js:63485:11)
       at Parser.parse (C:\Program Files (x86)\Yarn\lib\cli.js:63613:16)
       at Parser.parse (C:\Program Files (x86)\Yarn\lib\cli.js:63590:26)
@@ -32,8 +32,8 @@ npm manifest:
     "main": "src/index.js",
     "license": "MIT",
     "scripts": {
-      "build": "tsc",
-      "start": "node dist/shared/infra/http/server.js",
+      "build": "tsc --skipLibCheck",
+      "start": "node -r tsconfig-paths/register dist/shared/infra/http/server.js",
       "dev:server": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
       "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
       "test": "jest"
@@ -56,6 +56,7 @@ npm manifest:
       "nodemailer": "^6.7.8",
       "pg": "^8.7.3",
       "reflect-metadata": "^0.1.13",
+      "tsconfig-paths": "^4.2.0",
       "tsyringe": "^4.7.0",
       "typeorm": "0.2.24",
       "uuidv4": "^6.2.13"
@@ -76,8 +77,10 @@ npm manifest:
       "swagger-ui-express": "^4.6.0",
       "ts-jest": "^28.0.7",
       "ts-node-dev": "^2.0.0",
-      "tsconfig-paths": "^4.0.0",
       "typescript": "^4.7.2"
+    },
+    "engines": {
+      "node": ">= 16.14"
     }
   }
 
@@ -2061,11 +2064,6 @@ Lockfile:
     resolved "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
     integrity sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
   
-  fsevents@^2.3.2, fsevents@~2.3.2:
-    version "2.3.2"
-    resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
-    integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
-  
   function-bind@^1.1.1:
     version "1.1.1"
     resolved "https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz"
@@ -2909,10 +2907,10 @@ Lockfile:
     resolved "https://registry.npmjs.org/json-parse-even-better-errors/-/json-parse-even-better-errors-2.3.1.tgz"
     integrity sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
   
-  json5@^2.2.1:
-    version "2.2.1"
-    resolved "https://registry.npmjs.org/json5/-/json5-2.2.1.tgz"
-    integrity sha512-1hqLFMSrGHRHxav9q9gNjJ5EXznIxGVO09xQRrwplcS8qs28pZ8s8hupZAmqDwZUmVZ2Qb2jnyPOWcDH8m8dlA==
+  json5@^2.2.1, json5@^2.2.2:
+    version "2.2.3"
+    resolved "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz"
+    integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
   
   jsonwebtoken@^8.5.1:
     version "8.5.1"
@@ -4179,12 +4177,12 @@ Lockfile:
       v8-compile-cache-lib "^3.0.1"
       yn "3.1.1"
   
-  tsconfig-paths@^4.0.0:
-    version "4.0.0"
-    resolved "https://registry.npmjs.org/tsconfig-paths/-/tsconfig-paths-4.0.0.tgz"
-    integrity sha512-SLBg2GBKlR6bVtMgJJlud/o3waplKtL7skmLkExomIiaAtLGtVsoXIqP3SYdjbcH9lq/KVv7pMZeCBpLYOit6Q==
+  tsconfig-paths@^4.2.0:
+    version "4.2.0"
+    resolved "https://registry.npmjs.org/tsconfig-paths/-/tsconfig-paths-4.2.0.tgz"
+    integrity sha512-NoZ4roiN7LnbKn9QqE1amc9DJfzvZXxF4xDavcOWt1BPkdx+m+0gJuPM+S0vCe7zTJMYUP0R8pO2XMr+Y8oLIg==
     dependencies:
-      json5 "^2.2.1"
+      json5 "^2.2.2"
       minimist "^1.2.6"
       strip-bom "^3.0.0"
   

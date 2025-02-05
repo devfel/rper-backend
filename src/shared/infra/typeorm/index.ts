@@ -1,6 +1,27 @@
-import { createConnection } from "typeorm";
-createConnection();
+import { createConnection } from 'typeorm'
 
+createConnection({
+  type: 'postgres',
+  url: process.env.DATABASE_URL,
+  entities: [__dirname + '/../../../modules/**/infra/typeorm/entities/*.js'],
+  migrations: [__dirname + '/migrations/*.js'],
+  cli: {
+    migrationsDir: 'src/shared/infra/typeorm/migrations',
+  },
+})
+  .then(() => {
+    console.log('Database connected successfully!')
+  })
+  .catch(error => {
+    console.error('Database connection error:', error)
+  })
+
+////////////////////////////////////////////
+
+//   import { createConnection } from "typeorm";
+//   createConnection();
+
+////////////////////////////////////////////
 
 // import {DataSource} from "typeorm";
 // dataSource.connect();

@@ -1,4 +1,30 @@
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3333:3333' # Expose the app's port
+    environment:
+      DATABASE_URL: postgres://postgres:docker@database:5432/rper_database
+      TYPEORM_CONNECTION: postgres
+      TYPEORM_HOST: database
+      TYPEORM_PORT: 5432
+      TYPEORM_USERNAME: postgres
+      TYPEORM_PASSWORD: docker
+      TYPEORM_DATABASE: rper_database
+      TYPEORM_ENTITIES: dist/modules/**/infra/typeorm/entities/*.js
+      TYPEORM_MIGRATIONS: dist/shared/infra/typeorm/migrations/*.js
+      TYPEORM_MIGRATIONS_DIR: src/shared/infra/typeorm/migrations
+    volumes:
+      - ./tmp:/app/tmp # Persist tmp folder
+    env_file:
+      - .env
+    depends_on:
+      - database # Ensures the database service starts first
+    command: >
+      sh -c "./wait-for-it.sh database && npm run typeorm:run && npm start"
+
   database:
     image: postgres
     environment:
@@ -6,9 +32,36 @@ services:
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: rper_database
     volumes:
-      - pgdata:/var/lib/postgres/data
+      - pgdata:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - '5432:5432'
+
+  frontend:
+    build:
+      context: ../rper-frontend-web
+      dockerfile: Dockerfile
+    ports:
+      - '3000:80' # Serve the React app on localhost:3000
+    environment:
+      REACT_APP_API_URL: http://app:3333 # Use Docker service name to connect to the backend
+    depends_on:
+      - app # Ensures the backend starts first
 
 volumes:
   pgdata:
+#
+# # Old Configuration
+# services:
+#   database:
+#     image: postgres
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: docker
+#       POSTGRES_DB: rper_database
+#     volumes:
+#       - pgdata:/var/lib/postgres/data
+#     ports:
+#       - 5432:5432
+
+# volumes:
+#   pgdata:
