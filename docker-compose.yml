@@ -16,6 +16,7 @@ services:
       TYPEORM_ENTITIES: dist/modules/**/infra/typeorm/entities/*.js
       TYPEORM_MIGRATIONS: dist/shared/infra/typeorm/migrations/*.js
       TYPEORM_MIGRATIONS_DIR: src/shared/infra/typeorm/migrations
+      APP_API_URL: http://54.164.96.252:3333
     volumes:
       - ./tmp:/app/tmp # Persist tmp folder
     env_file:
