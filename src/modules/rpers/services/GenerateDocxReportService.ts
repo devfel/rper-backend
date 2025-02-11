@@ -31,7 +31,7 @@ export class GenerateDocxReportService {
         return ''
       }
 
-      const filePath = srcValue.replace('http://localhost:3333/files/', '')
+      const filePath = srcValue.replace(`${process.env.APP_API_URL}/files/`, '')
       const absolutePath = path.resolve('/app/tmp/uploads', filePath)
 
       if (!existsSync(absolutePath)) {

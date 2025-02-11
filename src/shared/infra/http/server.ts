@@ -34,7 +34,7 @@ const swaggerOptions = {
         name: '- Luiz Flavio Felizardo',
         email: 'devfelizardo@gmail.com',
       },
-      servers: ['http://localhost:3333'],
+      servers: [`${process.env.APP_API_URL}`],
     },
   },
   apis: ['**/*.routes.ts'],

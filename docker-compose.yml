@@ -16,7 +16,6 @@ services:
       TYPEORM_ENTITIES: dist/modules/**/infra/typeorm/entities/*.js
       TYPEORM_MIGRATIONS: dist/shared/infra/typeorm/migrations/*.js
       TYPEORM_MIGRATIONS_DIR: src/shared/infra/typeorm/migrations
-      APP_API_URL: http://54.164.96.252:3333
     volumes:
       - ./tmp:/app/tmp # Persist tmp folder
     env_file:
@@ -45,7 +44,6 @@ services:
       - '3000:80' # Serve the React app on localhost:3000
     environment:
       REACT_APP_API_URL: http://app:3333 # Use Docker service name to connect to the backend
-      APP_API_URL: http://app:3333 # Use Docker service name to connect to the backend
     depends_on:
       - app # Ensures the backend starts first
 
