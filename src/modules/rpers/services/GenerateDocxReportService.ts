@@ -33,6 +33,9 @@ export class GenerateDocxReportService {
 
       const filePath = srcValue.replace(`${process.env.APP_API_URL}/files/`, '')
       const absolutePath = path.resolve('/app/tmp/uploads', filePath)
+      console.log('process.env.APP: ', `${process.env.APP_API_URL}/files/}`) // #DEBUG_TEST
+      console.log('FilePath: ', filePath) // #DEBUG_TEST
+      console.log('AbsolutePath: ', absolutePath) // #DEBUG_TEST
 
       if (!existsSync(absolutePath)) {
         return '' // Skip this <img> tag if the file doesn't exist
